@@ -42,9 +42,8 @@ public class Product {
 	private String description;
 	
 	//this can be a boolean (free shipping? y/n, or set at a cost)
-	//curtis testing it
-	@NotBlank
-	private Integer shipping;
+	//deleted shipping - this comes in later.
+
 	
 	@NotNull
 	private float price;
