@@ -1,4 +1,4 @@
-package com.david.yourRhythymBlues.models;
+package com.example.demo.models;
 
 import java.util.Date;
 
@@ -42,8 +42,7 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private ShoppingCart shoppingCart;
+
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Vendor vendor;

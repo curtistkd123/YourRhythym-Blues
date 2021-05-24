@@ -1,4 +1,4 @@
-package com.david.yourRhythymBlues.models;
+package com.example.demo.models;
 
 
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="customer")
+@Table(name="customers")
 public class Customer {
 	
 	@Id
@@ -36,9 +36,6 @@ public class Customer {
 	@NotBlank
 	private Integer creditCard;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id")
-	private User user;
 
 	public Long getId() {
 		return id;

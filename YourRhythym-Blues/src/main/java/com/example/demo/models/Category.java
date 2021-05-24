@@ -1,4 +1,4 @@
-package com.david.yourRhythymBlues.models;
+package com.example.demo.models;
 
 
 import java.util.Date;
@@ -50,13 +50,8 @@ public class Category {
 		this.updatedAt = new Date();
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		name = "categories_products",
-		joinColumns = @JoinColumn(name = "category_id"),
-		inverseJoinColumns = @JoinColumn(name = "guitar_id")
-		)
-	private List <Guitar> guitars;
+	
+	
 	
 	public Category() {
 		
@@ -98,13 +93,7 @@ public class Category {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Guitar> getGuitars() {
-		return guitars;
-	}
 
-	public void setProducts(List<Guitar> guitars) {
-		this.guitars = guitars;
-	}
 
 
 	

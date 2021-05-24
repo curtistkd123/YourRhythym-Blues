@@ -1,4 +1,4 @@
-package com.david.yourRhythymBlues.models;
+package com.example.demo.models;
 
 import java.util.Date;
 import java.util.List;
@@ -52,9 +52,6 @@ public class Product {
 	@JoinColumn(name="category_id")
 	private Category category;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="order_id")
-	private Order order;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")

@@ -1,4 +1,4 @@
-package com.david.yourRhythymBlues.models;
+package com.example.demo.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
