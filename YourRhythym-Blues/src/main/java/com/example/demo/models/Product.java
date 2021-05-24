@@ -36,13 +36,10 @@ public class Product {
 	private String name;
 	
 	@Size(min=2, max=100)
-	private String Brand;
+	private String brand;
 	
 	@NotBlank
 	private String description;
-	
-	//this can be a boolean (free shipping? y/n, or set at a cost)
-	//deleted shipping - this comes in later.
 	
 	@NotNull
 	private float price;
@@ -50,6 +47,10 @@ public class Product {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")
 	private Category category;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="inventory_id")
+	private productInventory productInventory;
 	
 	
 	@Column(updatable=false)
@@ -71,7 +72,13 @@ public class Product {
 	}
 	
 
+	public ProductInventory getProductInventory() {
+		return productInventory;
+	}
 	
+	public void setProductInventory(ProductInventory productInventory) {
+		this.productInventory = productInventory;
+	}
 	public Category getCategory() {
 		return category;
 	}
@@ -104,6 +111,14 @@ public class Product {
 		this.price = price;
 	}
 
+	public String getBrand() {
+		return brand;
+	}
+	
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
