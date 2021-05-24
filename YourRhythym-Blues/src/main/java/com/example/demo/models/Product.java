@@ -25,8 +25,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-@Table(name="guitars")
-public class Guitar {
+@Table(name="products")
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,9 +53,8 @@ public class Guitar {
 	private Category category;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="shopping_cart")
-	private ShoppingCart shoppingCart;
-	
+	@JoinColumn(name="order_id")
+	private Order order;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
@@ -85,7 +84,7 @@ public class Guitar {
 		this.category = category;
 	}
 
-	public Guitar () {
+	public Product () {
 	}
 	
 
