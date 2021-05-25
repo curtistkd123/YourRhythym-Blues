@@ -41,6 +41,13 @@ public class Product {
 	@NotBlank
 	private String description;
 	
+<<<<<<< HEAD
+=======
+	//this can be a boolean (free shipping? y/n, or set at a cost)
+	//deleted shipping - this comes in later.
+
+	
+>>>>>>> origin
 	@NotNull
 	private float price;
 	
