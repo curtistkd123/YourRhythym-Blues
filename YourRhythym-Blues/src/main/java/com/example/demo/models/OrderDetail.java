@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="orderdetails")
+@Table(name="orderDetails")
 public class OrderDetail {
 	
 	
@@ -48,7 +48,7 @@ public class OrderDetail {
 	@NotNull
 	private Integer detailQuantity;
 	
-	@OneToOne(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="orderDetail", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private PaymentDetail paymentDetail;
 
 	
