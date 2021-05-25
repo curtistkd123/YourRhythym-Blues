@@ -57,11 +57,7 @@ public class Product {
 	private Category category;
 	
 	@OneToOne(fetch=FetchType.LAZY)
-<<<<<<< HEAD
-	@JoinColumn(name="productinventory_id")
-=======
 	@JoinColumn(name="product_inventory")
->>>>>>> 0afa4f5663fbe9f8da5fe7681026c5da7c6f4574
 	private ProductInventory productInventory;
 	
 	

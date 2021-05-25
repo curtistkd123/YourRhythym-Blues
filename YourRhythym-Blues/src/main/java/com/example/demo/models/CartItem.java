@@ -31,7 +31,7 @@ public class CartItem {
 	
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="session_id")
+	@JoinColumn(name="shopping_session")
 	private ShoppingSession shoppingSession;
 	
 	@OneToOne(fetch=FetchType.LAZY)
