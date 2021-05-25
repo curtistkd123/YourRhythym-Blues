@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,8 +34,8 @@ public class ShoppingSession {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="session_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private CartItem cartItem;
+	@OneToMany(mappedBy="shoppingSession", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<CartItem> cartItem;
 	
 	@NotNull
 	private Double total;
@@ -99,6 +100,16 @@ public class ShoppingSession {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public List<CartItem> getCartItem() {
+		return cartItem;
+	}
+
+	public void setCartItem(List<CartItem> cartItem) {
+		this.cartItem = cartItem;
+	}
+
+
 	
 	
 }

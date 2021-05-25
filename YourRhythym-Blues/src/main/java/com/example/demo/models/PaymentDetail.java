@@ -29,7 +29,7 @@ public class PaymentDetail {
 	private Long id;
 	
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="order_id")
+	@JoinColumn(name="orderDetail_id")
 	private OrderDetail orderDetail;
 	
 	@NotNull
