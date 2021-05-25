@@ -22,6 +22,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="payment_details")
 public class PaymentDetail {
 
+	//payment detail model//
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

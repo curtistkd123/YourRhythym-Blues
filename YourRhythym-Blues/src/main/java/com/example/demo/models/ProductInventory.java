@@ -20,6 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="product_inventory")
 public class ProductInventory {
 
+	//product inventory model//
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -22,6 +22,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name="cart_item")
 public class CartItem {
 	
+	
+	// Cart item model//
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -23,6 +23,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class OrderDetail {
 	
 	
+	//order detail
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
