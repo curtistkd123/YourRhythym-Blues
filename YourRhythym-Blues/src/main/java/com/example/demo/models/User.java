@@ -58,13 +58,13 @@ public class User {
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private UserAddress userAddress;
 	
-<<<<<<< HEAD
-	@OneToMany(mappedBy="user_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<UserPayment> userPayments;
-=======
+
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<UserPayment> userPayment;
->>>>>>> 0afa4f5663fbe9f8da5fe7681026c5da7c6f4574
+
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Vendor vendor;
