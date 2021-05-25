@@ -4,6 +4,7 @@ package com.example.demo.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -53,17 +54,23 @@ public class Category {
 		this.updatedAt = new Date();
 	}
 	
-	@OneToMany(mappedBy"category", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="category", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Product> products;
 	
-	public void setProduct(Long id) {
-		this.product = product;
-	}
 	
-	public String getProduct() {
-		return product;
-	}
 	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 	public Category() {
 		
 	}
