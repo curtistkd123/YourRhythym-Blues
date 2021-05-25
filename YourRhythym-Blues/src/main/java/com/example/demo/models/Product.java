@@ -57,7 +57,7 @@ public class Product {
 	private Category category;
 	
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="inventory_id")
+	@JoinColumn(name="productinventory_id")
 	private ProductInventory productInventory;
 	
 	

@@ -45,7 +45,7 @@ public class ProductInventory {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
-	@OneToOne(mappedBy="inventory_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="productinventory", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Product product;
 
 	public ProductInventory() {

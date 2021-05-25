@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -58,7 +59,7 @@ public class User {
 	private UserAddress userAddress;
 	
 	@OneToMany(mappedBy="user_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private UserPayment userPayment;
+	private List<UserPayment> userPayments;
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Vendor vendor;
