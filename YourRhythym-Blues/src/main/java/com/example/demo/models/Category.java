@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-
+//categories for products
 
 @Entity
 @Table(name="categories")
