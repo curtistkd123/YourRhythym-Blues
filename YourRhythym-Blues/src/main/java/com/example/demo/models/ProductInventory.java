@@ -45,7 +45,11 @@ public class ProductInventory {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
+<<<<<<< HEAD
 	@OneToOne(mappedBy="productinventory", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+=======
+	@OneToOne(mappedBy="productInventory", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+>>>>>>> 0afa4f5663fbe9f8da5fe7681026c5da7c6f4574
 	private Product product;
 
 	public ProductInventory() {

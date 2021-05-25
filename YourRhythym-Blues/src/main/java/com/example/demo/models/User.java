@@ -55,17 +55,19 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 	
-	@OneToOne(mappedBy="user_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private UserAddress userAddress;
 	
+<<<<<<< HEAD
 	@OneToMany(mappedBy="user_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<UserPayment> userPayments;
+=======
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<UserPayment> userPayment;
+>>>>>>> 0afa4f5663fbe9f8da5fe7681026c5da7c6f4574
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Vendor vendor;
-	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Customer customer;
 	
 	public String getFirstName() {
 		return firstName;
