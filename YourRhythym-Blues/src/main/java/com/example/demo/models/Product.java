@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -41,13 +42,13 @@ public class Product {
 	@NotBlank
 	private String description;
 	
-<<<<<<< HEAD
-=======
-	//this can be a boolean (free shipping? y/n, or set at a cost)
-	//deleted shipping - this comes in later.
-
-	
->>>>>>> origin
+//<<<<<<< HEAD
+//=======
+//	//this can be a boolean (free shipping? y/n, or set at a cost)
+//	//deleted shipping - this comes in later.
+//
+//	
+//>>>>>>> origin
 	@NotNull
 	private float price;
 	
@@ -57,7 +58,7 @@ public class Product {
 	
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="inventory_id")
-	private productInventory productInventory;
+	private ProductInventory productInventory;
 	
 	
 	@Column(updatable=false)
