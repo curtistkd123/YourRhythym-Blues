@@ -22,6 +22,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="shopping_session")
 public class ShoppingSession {
+	
+	//shopping session//
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

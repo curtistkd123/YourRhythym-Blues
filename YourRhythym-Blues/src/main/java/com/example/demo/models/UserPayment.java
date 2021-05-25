@@ -20,6 +20,7 @@ public class UserPayment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	//user payment model//
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")

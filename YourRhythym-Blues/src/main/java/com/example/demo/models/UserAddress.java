@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+
+// user address model//
 @Entity
 @Table(name="user_addresses")
 public class UserAddress {
