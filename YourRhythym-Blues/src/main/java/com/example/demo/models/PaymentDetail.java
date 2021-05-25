@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -19,34 +19,25 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="orderdetails")
-public class OrderDetail {
-	
-	
+@Table(name="payment_details")
+public class PaymentDetail {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="order_id")
-	private Order order;
+	private OrderDetail orderDetail;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="product_id")
-	private Product product;
+	@NotNull
+	private float amount;
 	
 	@NotBlank
-	private String detailName;
+	private String provider;
 	
-	@NotNull
-	private float detailPrice;
-	
-	@NotNull
-	private Integer detailQuantity;
-	
-	@OneToOne(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private PaymentDetail paymentDetail;
-
+	@NotBlank
+	private String status;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
@@ -65,8 +56,8 @@ public class OrderDetail {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
-	
-	public OrderDetail() {
+
+	public PaymentDetail() {
 	}
 
 	public Long getId() {
@@ -77,46 +68,38 @@ public class OrderDetail {
 		this.id = id;
 	}
 
-	public Order getOrder() {
-		return order;
+	public OrderDetail getOrderDetail() {
+		return orderDetail;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrderDetail(OrderDetail orderDetail) {
+		this.orderDetail = orderDetail;
 	}
 
-	public Product getProduct() {
-		return product;
+	public float getAmount() {
+		return amount;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setAmount(float amount) {
+		this.amount = amount;
 	}
 
-	public String getDetailName() {
-		return detailName;
+	public String getProvider() {
+		return provider;
 	}
 
-	public void setDetailName(String detailName) {
-		this.detailName = detailName;
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
-	public float getDetailPrice() {
-		return detailPrice;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setDetailPrice(float detailPrice) {
-		this.detailPrice = detailPrice;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public Integer getDetailQuantity() {
-		return detailQuantity;
-	}
-
-	public void setDetailQuantity(Integer detailQuantity) {
-		this.detailQuantity = detailQuantity;
-	}
-	
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -135,5 +118,6 @@ public class OrderDetail {
 	
 	
 	
-
+	
+	
 }

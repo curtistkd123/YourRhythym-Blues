@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -32,6 +33,8 @@ public class Category {
 	@Size(min=2, max=100)
 	private String name;
 	
+	private String description;
+	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
 	private Date createdAt;
@@ -50,8 +53,16 @@ public class Category {
 		this.updatedAt = new Date();
 	}
 	
+	@OneToMany(mappedBy"category", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Product> products;
 	
+	public void setProduct(Long id) {
+		this.product = product;
+	}
 	
+	public String getProduct() {
+		return product;
+	}
 	
 	public Category() {
 		

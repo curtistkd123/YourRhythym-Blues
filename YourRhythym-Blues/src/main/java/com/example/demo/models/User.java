@@ -30,9 +30,17 @@ public class User {
 	@NotBlank
 	private String lastName;
 	
+	@NotBlank
+	private Integer telephone;
+	
+	@NotBlank
+	private String username;
+	
 	@Email
 	@NotBlank
 	private String email;
+	
+	@NotBlank
 	private String password;
 
 	@Transient
@@ -42,7 +50,11 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 	
-
+	@OneToOne(mappedBy="user_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private UserAddress userAddress;
+	
+	@OneToMany(mappedBy="user_id", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private UserPayment userPayment;
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Vendor vendor;
@@ -61,6 +73,21 @@ public class User {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public Integer getTelephone() {
+		return telephone;
+	}
+	
+	public void setTelephone(Integer telephone) {
+		this.telephone = telephone;
 	}
 	public Long getId() {
 		return id;

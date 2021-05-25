@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -19,34 +19,33 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="orderdetails")
-public class OrderDetail {
-	
-	
+@Table(name="user_addresses")
+public class UserAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="order_id")
-	private Order order;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="product_id")
-	private Product product;
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	@NotBlank
-	private String detailName;
+	private String address_line1;
+	
+	@NotBlank
+	private String address_line2;
+	
+	@NotBlank
+	private String city;
 	
 	@NotNull
-	private float detailPrice;
+	private Integer zipCode;
+	
+	@NotBlank
+	private String Country;
 	
 	@NotNull
-	private Integer detailQuantity;
-	
-	@OneToOne(mappedBy="person", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private PaymentDetail paymentDetail;
-
+	private Integer telephone;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
@@ -65,8 +64,8 @@ public class OrderDetail {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
-	
-	public OrderDetail() {
+
+	public UserAddress() {
 	}
 
 	public Long getId() {
@@ -77,46 +76,62 @@ public class OrderDetail {
 		this.id = id;
 	}
 
-	public Order getOrder() {
-		return order;
+	public User getUser() {
+		return user;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Product getProduct() {
-		return product;
+	public String getAddress_line1() {
+		return address_line1;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setAddress_line1(String address_line1) {
+		this.address_line1 = address_line1;
 	}
 
-	public String getDetailName() {
-		return detailName;
+	public String getAddress_line2() {
+		return address_line2;
 	}
 
-	public void setDetailName(String detailName) {
-		this.detailName = detailName;
+	public void setAddress_line2(String address_line2) {
+		this.address_line2 = address_line2;
 	}
 
-	public float getDetailPrice() {
-		return detailPrice;
+	public String getCity() {
+		return city;
 	}
 
-	public void setDetailPrice(float detailPrice) {
-		this.detailPrice = detailPrice;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public Integer getDetailQuantity() {
-		return detailQuantity;
+	public Integer getZipCode() {
+		return zipCode;
 	}
 
-	public void setDetailQuantity(Integer detailQuantity) {
-		this.detailQuantity = detailQuantity;
+	public void setZipCode(Integer zipCode) {
+		this.zipCode = zipCode;
 	}
-	
+
+	public String getCountry() {
+		return Country;
+	}
+
+	public void setCountry(String country) {
+		Country = country;
+	}
+
+	public Integer getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(Integer telephone) {
+		this.telephone = telephone;
+	}
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -134,6 +149,4 @@ public class OrderDetail {
 	}
 	
 	
-	
-
 }

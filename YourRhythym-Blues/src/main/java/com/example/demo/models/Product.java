@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -36,21 +37,28 @@ public class Product {
 	private String name;
 	
 	@Size(min=2, max=100)
-	private String Brand;
+	private String brand;
 	
 	@NotBlank
 	private String description;
 	
-	//this can be a boolean (free shipping? y/n, or set at a cost)
-	//deleted shipping - this comes in later.
-
-	
+//<<<<<<< HEAD
+//=======
+//	//this can be a boolean (free shipping? y/n, or set at a cost)
+//	//deleted shipping - this comes in later.
+//
+//	
+//>>>>>>> origin
 	@NotNull
 	private float price;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")
 	private Category category;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="inventory_id")
+	private ProductInventory productInventory;
 	
 	
 	@Column(updatable=false)
@@ -72,7 +80,13 @@ public class Product {
 	}
 	
 
+	public ProductInventory getProductInventory() {
+		return productInventory;
+	}
 	
+	public void setProductInventory(ProductInventory productInventory) {
+		this.productInventory = productInventory;
+	}
 	public Category getCategory() {
 		return category;
 	}
@@ -105,6 +119,14 @@ public class Product {
 		this.price = price;
 	}
 
+	public String getBrand() {
+		return brand;
+	}
+	
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
