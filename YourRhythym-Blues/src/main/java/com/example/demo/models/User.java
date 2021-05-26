@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -30,16 +31,16 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
+	@NotEmpty(message="first name must not be blank")
 	private String firstName;
 	
-	@NotBlank
+	@NotBlank(message="last name must not be blank")
 	private String lastName;
 	
-	@NotNull(message="Phone number can not be empty")
+	@NotEmpty(message="Phone number can not be empty")
 	private String telephone;
 	
-	@NotBlank
+	@NotBlank(message="username can not be empty")
 	private String username;
 	
 	@Email
