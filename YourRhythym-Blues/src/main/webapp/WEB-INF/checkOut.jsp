@@ -122,7 +122,8 @@
 		  <dt class="col-sm-10">Total:</dt>
 		  <dd class="col-sm-2 text-right"><strong class="h5 text-dark">$1,650</strong></dd>
 		</dl>
-
+		<a href="/paymentDetail" class="btn btn-primary btn-block">Purchase!</a>
+				<a href="#" class="btn btn-light btn-block">Continue Shopping</a>
 
 	
 

@@ -86,7 +86,7 @@ public class PaymentController {
 		return "redirect:/paymentDetail";
 	}
 	
-	@GetMapping("/shoppingCart/checkOut/paymentDetail")
+	@GetMapping("/paymentDetail")
 	public String paymentDetail(@ModelAttribute("paymentDetail") PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
 		return "paymentDetail.jsp";
 	}
