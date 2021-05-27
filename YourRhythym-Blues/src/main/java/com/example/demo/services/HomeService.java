@@ -22,5 +22,28 @@ public class HomeService {
 		return uRepo.save(user);
 	}
 	
+	public boolean authenticateUser(String email, String password) {
+		User user = uRepo.findByEmail(email);
+			if(user == null) {
+				return false;
+			}else {
+				if(BCrypt.checkpw(password, user.getPassword())) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		}
+
+	public User findUserById(Long id) {
+		// TODO Auto-generated method stub
+		return uRepo.findById(id).orElse(null);
+	}
+
+	public @Valid User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return uRepo.findByEmail(email);
+	}
+	
 	
 }

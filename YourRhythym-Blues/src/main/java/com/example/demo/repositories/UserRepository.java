@@ -8,4 +8,6 @@ import com.example.demo.models.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
+	User findByEmail(String email);
+
 }
