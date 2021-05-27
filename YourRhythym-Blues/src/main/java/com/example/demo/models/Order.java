@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @Table(name="orders")
 public class Order {
 	
-	// order model //
+	// order model // 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -33,6 +35,7 @@ public class HomeService {
 		return uRepo.save(user);
 	}
 	
+<<<<<<< HEAD
 	public boolean authenticateUser(String email, String password) {
 		User user = uRepo.findByEmail(email);
 			if(user == null) {
@@ -65,3 +68,16 @@ public class HomeService {
 	
 	
 }
+=======
+	public User findUserById(Long id) {
+		Optional<User> user = uRepo.findById(id);
+			
+		if(user.isPresent()) {
+			return user.get();
+		} else {
+				return null;
+			}
+		}
+	}
+
+>>>>>>> 171f021d3b793f4cbf15aef95323dbc3e4d1fd65

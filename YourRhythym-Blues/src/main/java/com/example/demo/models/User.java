@@ -57,6 +57,12 @@ public class User {
 	private Date createdAt;
 	private Date updatedAt;
 	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<CartItem> cartItems;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<OrderDetail> orderDetails;
+	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private UserAddress userAddress;
 	
@@ -67,9 +73,9 @@ public class User {
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<UserPayment> userPayment;
 
-	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Vendor vendor;
+//	
+//	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//	private Vendor vendor;
 	
 
     @PrePersist
@@ -158,11 +164,23 @@ public class User {
 	public void setUserPayment(List<UserPayment> userPayment) {
 		this.userPayment = userPayment;
 	}
-	public Vendor getVendor() {
-		return vendor;
+//	public Vendor getVendor() {
+//		return vendor;
+//	}
+//	public void setVendor(Vendor vendor) {
+//		this.vendor = vendor;
+//	}
+	public List<CartItem> getCartItems() {
+		return cartItems;
 	}
-	public void setVendor(Vendor vendor) {
-		this.vendor = vendor;
+	public void setCartItems(List<CartItem> cartItems) {
+		this.cartItems = cartItems;
+	}
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
 	}
     
     
