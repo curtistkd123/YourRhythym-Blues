@@ -20,7 +20,7 @@ public class HomeService {
 	private UserRepository uRepo;
 	@Autowired
 	private VendorRepository vRepo;
-	
+
 	public @Valid Vendor createVendor(@Valid Vendor vendor) {
 		// TODO Auto-generated method stub
 		String hashed = BCrypt.hashpw(vendor.getPassword(), BCrypt.gensalt());
@@ -34,20 +34,19 @@ public class HomeService {
 		user.setPassword(hashed);
 		return uRepo.save(user);
 	}
-	
-<<<<<<< HEAD
+
 	public boolean authenticateUser(String email, String password) {
 		User user = uRepo.findByEmail(email);
-			if(user == null) {
+		if (user == null) {
+			return false;
+		} else {
+			if (BCrypt.checkpw(password, user.getPassword())) {
+				return true;
+			} else {
 				return false;
-			}else {
-				if(BCrypt.checkpw(password, user.getPassword())) {
-					return true;
-				}else {
-					return false;
-				}
 			}
 		}
+	}
 
 	public User findUserById(Long id) {
 		// TODO Auto-generated method stub
@@ -63,21 +62,4 @@ public class HomeService {
 		// TODO Auto-generated method stub
 		return uRepo.save(user);
 	}
-
-	
-	
-	
 }
-=======
-	public User findUserById(Long id) {
-		Optional<User> user = uRepo.findById(id);
-			
-		if(user.isPresent()) {
-			return user.get();
-		} else {
-				return null;
-			}
-		}
-	}
-
->>>>>>> 171f021d3b793f4cbf15aef95323dbc3e4d1fd65
