@@ -55,7 +55,7 @@ public class Product {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")
 	private Category category;
-	
+		
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="product_inventory")
 	private ProductInventory productInventory;
@@ -154,6 +154,7 @@ public class Product {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
 
 
 }

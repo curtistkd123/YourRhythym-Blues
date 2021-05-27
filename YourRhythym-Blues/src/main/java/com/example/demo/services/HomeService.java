@@ -7,13 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.User;
+import com.example.demo.models.Vendor;
 import com.example.demo.repositories.UserRepository;
+import com.example.demo.repositories.VendorRepository;
 
 @Service
 public class HomeService {
 
 	@Autowired
 	private UserRepository uRepo;
+	@Autowired
+	private VendorRepository vRepo;
+	
+	public @Valid Vendor createVendor(@Valid Vendor vendor) {
+		// TODO Auto-generated method stub
+		String hashed = BCrypt.hashpw(vendor.getPassword(), BCrypt.gensalt());
+		vendor.setPassword(hashed);
+		return vRepo.save(vendor);
+	}
 
 	public User createUser(@Valid User user) {
 		// TODO Auto-generated method stub
@@ -44,6 +55,13 @@ public class HomeService {
 		// TODO Auto-generated method stub
 		return uRepo.findByEmail(email);
 	}
+
+	public @Valid User updateUser(@Valid User user) {
+		// TODO Auto-generated method stub
+		return uRepo.save(user);
+	}
+
+	
 	
 	
 }

@@ -30,7 +30,7 @@
 				</c:when>
 
 				<c:otherwise>
-					<c:out value="${user.firstName }"/>, <a class="navbar-brand bg-dark" href="/edit/user/${user.id}"><button>Edit
+					<c:out value="${user.firstName }"/>, <a class="navbar-brand bg-dark" href="/edituser${user.id}"><button>Edit
 							Profile</button></a>
 
 				</c:otherwise>

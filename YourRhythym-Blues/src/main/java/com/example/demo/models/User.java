@@ -44,10 +44,10 @@ public class User {
 	private String username;
 	
 	@Email
-	@NotBlank
+	@NotBlank(message="email must not be blank")
 	private String email;
 	
-	@NotBlank
+	@NotBlank(message="password must not be blank")
 	private String password;
 
 	@Transient

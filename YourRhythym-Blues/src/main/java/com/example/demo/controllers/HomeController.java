@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.models.User;
+import com.example.demo.models.Vendor;
 import com.example.demo.services.HomeService;
 import com.example.demo.validators.UserValidator;
 
@@ -36,6 +38,22 @@ public class HomeController {
 		return"index.jsp";
 	}
 	
+	@GetMapping("/newVendor")
+	public String newVendor(@ModelAttribute("vendor")Vendor vendor) {
+		return"newVendor.jsp";
+	}
+	
+	@PostMapping("/newVendor")
+	public String createVendor(@Valid @ModelAttribute("vendor")Vendor vendor,BindingResult result,HttpSession session) {
+		uValidate.validate(vendor, result);
+		if(result.hasErrors()) {
+			return"newVendor.jsp";
+		}
+		service.createVendor(vendor);
+		session.setAttribute("venId", vendor.getId());
+	
+		return"Vdashboard.jsp";
+	}
 	@GetMapping("/register")
 	public String signup(@ModelAttribute("user")User user) {
 		
@@ -77,21 +95,21 @@ public class HomeController {
 		return"redirect:/";
 	}
 	
-	@GetMapping("/edit/user/{id}")
+	@GetMapping("/edituser{id}")
 	public String editUser(@ModelAttribute("user")User user,@PathVariable("id")Long id,Model model) {
 		user = service.findUserById(id);
 		model.addAttribute("user",user);
 		return"editUser.jsp";
 	}
 	
-	@PostMapping("/edit/user/{id}")
-	public String updateUser(@Valid @ModelAttribute("user")User user,BindingResult result,HttpSession session) {
-		uValidate.validate(user, result);
+	@PostMapping("/edituser{id}")
+	public String updateUser(@Valid @ModelAttribute("user")User user,BindingResult result,HttpSession session,@PathVariable("id")Long id) {
+		user = service.findUserById(id);
 		if(result.hasErrors()) {
-			return"userRegister.jsp";
+			return"editUser.jsp";
 		}
-		user.setId((Long) session.getAttribute("userId"));
-		service.createUser(user);
+		
+		service.updateUser(user);
 		session.setAttribute("id", user.getId());
 		
 		return"/";

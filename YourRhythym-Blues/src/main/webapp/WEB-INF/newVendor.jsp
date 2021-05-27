@@ -44,11 +44,7 @@
 	});
 	// jquery end
 </script>
-
-</head>
 <body>
-
-
 	<header class="section-header">
 		<section class="header-main border-bottom">
 			<div class="container">
@@ -103,42 +99,30 @@
 		<!-- header-main .// -->
 	</header>
 	<!-- section-header.// -->
-
-
-
-	<!-- ========================= SECTION CONTENT ========================= -->
-	<section class="section-content padding-y">
-
-		<!-- ============================ COMPONENT REGISTER   ================================= -->
-		<div class="card mx-auto" style="max-width: 520px; margin-top: 40px;">
-			<div class="card-body">
-				<h4 class="card-title mb-4">Profile</h4>
-				<p>
-				<form:errors path="user.*" />
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-12 col-lg-8">
+			<p>
+				<form:errors path="vendor.*" />
 			</p>
-				<form:form action="edituser${user.id}" method="Post"
-					modelAttribute="user">
-					<div class="form-group">
-						<img src="bootstrap-ecommerce-html/images/avatars/avatar1.jpg"
-							class="img-sm rounded-circle border">
-					</div>
+				<form:form action="/newVendor" method="post" modelAttribute="vendor">
 					<div class="form-row">
 						<div class="col form-group">
-							<label>User Name</label>
-							<form:input path="username" type="text" class="form-control"
-								placeholder="${user.username }" />
+							<label>Company Name</label>
+							<form:input path="name" type="text" class="form-control"
+								placeholder="" />
 						</div>
 						<!-- form-group end.// -->
 						<div class="col form-group">
-							<label>First name</label>
-							<form:input path="firstName" type="text" class="form-control"
-								placeholder="${user.firstName }" />
+							<label>Statement</label>
+							<form:input path="description" type="text" class="form-control"
+								placeholder="" />
 						</div>
 						<!-- form-group end.// -->
 						<div class="col form-group">
-							<label>Last name</label>
-							<form:input path="lastName" type="text" class="form-control"
-								placeholder="${user.lastName }" />
+							<label>Address</label>
+							<form:input path="address" type="text" class="form-control"
+								placeholder="" />
 						</div>
 						<!-- form-group end.// -->
 					</div>
@@ -146,48 +130,45 @@
 					<div class="form-group">
 						<label>Email</label>
 						<form:input path="email" type="email" class="form-control"
-							placeholder="${user.email }" />
-						<small class="form-text text-muted">We'll never share your
-							email with anyone else.</small>
+							placeholder="" />
+						
 					</div>
 					<!-- form-group end.// -->
 					<div class="form-group">
 						<label>Phone</label>
-						<form:input path="telephone" type="tel" class="form-control"
-							placeholder="${user.telephone }" />
+						<form:input path="phoneNumber" type="tel" class="form-control"
+							placeholder="" />
 					</div>
 					<!-- form-group end.// -->
 
-
-					<button class="btn btn-primary btn-block">Save info</button>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label>Create password</label>
+							<form:input path="password" class="form-control" type="password" />
+						</div>
+						<!-- form-group end.// -->
+						<div class="form-group col-md-6">
+							<label>Repeat password</label>
+							<form:input path="confirmPassword" class="form-control"
+								type="password" />
+						</div>
+						<!-- form-group end.// -->
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">
+							Welcome to your Site</button>
+					</div>
+					<!-- form-group// -->
+					<div class="form-group">
+						<label class="custom-control custom-checkbox"> <input
+							type="checkbox" class="custom-control-input" checked="">
+						
+						</label>
+					</div>
+					<!-- form-group end.// -->
 				</form:form>
 			</div>
-			<!-- card-body.// -->
 		</div>
-		<!-- card .// -->
-
-		<br> <br>
-		<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-
-
-	</section>
-	<!-- ========================= SECTION CONTENT END// ========================= -->
-
-
-	<!-- ========================= FOOTER ========================= -->
-	<footer class="section-footer border-top padding-y">
-		<div class="container">
-			<p class="float-md-right">&copy Copyright 2019 All rights
-				reserved</p>
-			<p>
-				<a href="#">Terms and conditions</a>
-			</p>
-		</div>
-		<!-- //container -->
-	</footer>
-	<!-- ========================= FOOTER END // ========================= -->
-
-
-
+	</div>
 </body>
 </html>
