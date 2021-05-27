@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -22,5 +24,14 @@ public class HomeService {
 		return uRepo.save(user);
 	}
 	
-	
-}
+	public User findUserById(Long id) {
+		Optional<User> user = uRepo.findById(id);
+			
+		if(user.isPresent()) {
+			return user.get();
+		} else {
+				return null;
+			}
+		}
+	}
+

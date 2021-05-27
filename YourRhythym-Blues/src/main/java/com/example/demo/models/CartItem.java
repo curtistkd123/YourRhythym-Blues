@@ -30,10 +30,16 @@ public class CartItem {
 	private Long id;
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="shopping_session")
-	private ShoppingSession shoppingSession;
+//	@ManyToOne(fetch=FetchType.LAZY)
+//	@JoinColumn(name="session_id")
+//	private ShoppingSession shoppingSession;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
+	
+
+
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="product_id")
 	private Product product;
@@ -70,12 +76,20 @@ public class CartItem {
 		this.id = id;
 	}
 
-	public ShoppingSession getShoppingSession() {
-		return shoppingSession;
+//	public ShoppingSession getShoppingSession() {
+//		return shoppingSession;
+//	}
+//
+//	public void setShoppingSession(ShoppingSession shoppingSession) {
+//		this.shoppingSession = shoppingSession;
+//	}
+	
+	public User getUser() {
+		return user;
 	}
 
-	public void setShoppingSession(ShoppingSession shoppingSession) {
-		this.shoppingSession = shoppingSession;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Product getProduct() {

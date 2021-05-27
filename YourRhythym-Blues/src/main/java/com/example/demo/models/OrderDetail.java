@@ -32,6 +32,10 @@ public class OrderDetail {
 	private Long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="order_id")
 	private Order order;
 	
@@ -135,6 +139,22 @@ public class OrderDetail {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public PaymentDetail getPaymentDetail() {
+		return paymentDetail;
+	}
+
+	public void setPaymentDetail(PaymentDetail paymentDetail) {
+		this.paymentDetail = paymentDetail;
 	}
 	
 	
