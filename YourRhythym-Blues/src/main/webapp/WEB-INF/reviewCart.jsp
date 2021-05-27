@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- jQuery -->
+<!-- jQuery  -->
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 
 <!-- Bootstrap -->

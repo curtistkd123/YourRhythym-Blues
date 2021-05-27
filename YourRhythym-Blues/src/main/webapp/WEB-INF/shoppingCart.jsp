@@ -6,7 +6,7 @@
 <!-- jQuery -->
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 
-<!-- Bootstrap -->
+<!-- Bootstrap  -->
 <script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
 
 <!-- custom javascript -->

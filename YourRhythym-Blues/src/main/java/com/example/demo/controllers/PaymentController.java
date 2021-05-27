@@ -44,7 +44,7 @@ public class PaymentController {
 //		vService.createVendor(vendor);
 //		session.setAttribute("id", vendor.getId());
 //		
-//		return"index.jsp";
+//		return"index.jsp"; 
 //	}
 //	
 	

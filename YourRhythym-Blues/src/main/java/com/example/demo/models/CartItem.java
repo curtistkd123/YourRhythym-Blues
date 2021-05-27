@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class CartItem {
 	
 	
-	// Cart item model//
+	// Cart item model// 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

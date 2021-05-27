@@ -29,7 +29,7 @@ public class PaymentService {
 	private PaymentDetailRepository paymentDetailRepo;
 	
 //	@Autowired
-//	private ShoppingSessionRepository sessionRepo;
+//	private ShoppingSessionRepository sessionRepo;  
 	
 	public CartItem createCartItem(CartItem cartItem) {
 		return this.cartRepo.save(cartItem);

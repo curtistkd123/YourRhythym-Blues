@@ -7,7 +7,7 @@
 
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 
-<!-- jQuery -->
+<!-- jQuery  -->
 <script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
 
 <!-- Bootstrap files-->
