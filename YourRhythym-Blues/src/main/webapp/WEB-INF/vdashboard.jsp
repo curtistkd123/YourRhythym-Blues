@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<h1>Vendor Dashboard Page</h1>
 </body>
 </html>

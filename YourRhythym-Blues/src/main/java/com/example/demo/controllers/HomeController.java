@@ -18,11 +18,15 @@ import com.example.demo.models.User;
 import com.example.demo.models.Vendor;
 import com.example.demo.services.HomeService;
 import com.example.demo.validators.UserValidator;
+import com.example.demo.validators.VendorValidator;
 
 @Controller
 public class HomeController {
 	@Autowired
 	private UserValidator uValidate;
+	
+	@Autowired
+	private VendorValidator vValidate;
 	
 	@Autowired
 	private HomeService service;
@@ -45,14 +49,14 @@ public class HomeController {
 	
 	@PostMapping("/newVendor")
 	public String createVendor(@Valid @ModelAttribute("vendor")Vendor vendor,BindingResult result,HttpSession session) {
-		uValidate.validate(vendor, result);
+		vValidate.validate(vendor, result);
 		if(result.hasErrors()) {
 			return"newVendor.jsp";
 		}
 		service.createVendor(vendor);
 		session.setAttribute("venId", vendor.getId());
 	
-		return"Vdashboard.jsp";
+		return"vdashboard.jsp";
 	}
 	@GetMapping("/register")
 	public String signup(@ModelAttribute("user")User user) {

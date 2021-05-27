@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="vendors")
@@ -33,7 +34,7 @@ public class Vendor {
 	@NotBlank
 	private String address;
 	
-	@NotBlank
+	@NotNull
 	private Integer phoneNumber;
 	
 	@Email
