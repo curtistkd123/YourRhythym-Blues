@@ -121,5 +121,10 @@ public class HomeService {
 			// TODO Auto-generated method stub
 			return cRepo.findById(cid).orElse(null);
 		}
+
+		public List<Product> findAllProducts() {
+			// TODO Auto-generated method stub
+			return (List<Product>) pRepo.findAll();
+		}
 	
 }

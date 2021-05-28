@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,6 +48,9 @@ public class Product {
 	private float price;
 	
 	private String imgDir;
+	
+	@Column(nullable = true, length = 64)
+	private String images;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")
@@ -173,7 +177,22 @@ public class Product {
 		this.imgDir = imgDir;
 	}
 
-	
+	public String getImages() {
+		return images;
+	}
 
+	public void setImages(String images) {
+		this.images = images;
+	}
+
+	@Transient
+	public String getPhotosImagePath() {
+		if (images == null || id == null) 
+			return null;
+		
+		return "/product-photos/"+this.getId()+"/"+this.images;
+	}
+	
+	
 
 }

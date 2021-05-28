@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,17 +19,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.models.Category;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
 import com.example.demo.models.Vendor;
+import com.example.demo.resources.FileUploadUtil;
 import com.example.demo.services.HomeService;
 import com.example.demo.validators.UserValidator;
 import com.example.demo.validators.VendorValidator;
 
 @Controller
 public class HomeController {
+	
+	
 	@Autowired
 	private UserValidator uValidate;
 	
@@ -40,11 +46,14 @@ public class HomeController {
 	@GetMapping("/")
 	public String index(HttpSession session,Model model) {
 		if(session.getAttribute("userid")==null) {
-			model.addAttribute("user",null);
-			return"index.jsp";
+			
+			return"redirect:/login";
 		}
+		
+		List<Product> products = service.findAllProducts();
 			User user = service.findUserById((Long)session.getAttribute("userid"));
 			model.addAttribute("user",user);
+			model.addAttribute("products",products);
 		return"index.jsp";
 	}
 	
@@ -146,7 +155,8 @@ public class HomeController {
 	}
 	
 	@PostMapping("/newProduct{id}")
-	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,HttpSession session) {
+	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,
+			HttpSession session,@RequestParam("images") MultipartFile multipartFile) throws IOException {
 		
 		if(result.hasErrors()) {
 			return"newProduct.jsp";
@@ -160,11 +170,13 @@ public class HomeController {
 		product.setVendors(vendors);
 		vendors.add(vendor);
 		product.setVendors(vendors);	
-		
 		String imgdir = vendor.getName()+"/"+product.getName();
-		
 		product.setImgDir(imgdir.replaceAll("\\s", ""));
 		service.createDirectory(imgdir);
+		
+		String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		String uploadDir = "images/"+product.getImgDir();
+		FileUploadUtil.saveFile(uploadDir,filename, multipartFile);
 		service.addProduct(product);
 		System.out.println(product.getCategory());
 		
