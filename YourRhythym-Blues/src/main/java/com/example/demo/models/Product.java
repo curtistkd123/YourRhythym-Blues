@@ -33,6 +33,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	
 	@Size(min=2, max=100)
 	private String name;
 	
@@ -42,13 +43,6 @@ public class Product {
 	@NotBlank
 	private String description;
 	
-//<<<<<<< HEAD
-//=======
-//	//this can be a boolean (free shipping? y/n, or set at a cost)
-//	//deleted shipping - this comes in later.
-//
-//	
-//>>>>>>> origin
 	@NotNull
 	private float price;
 	
@@ -60,7 +54,13 @@ public class Product {
 	@JoinColumn(name="product_inventory")
 	private ProductInventory productInventory;
 	
-	
+	 @ManyToMany(fetch = FetchType.LAZY)
+	    @JoinTable(
+	        name = "vendor_products", 
+	        joinColumns = @JoinColumn(name = "product_id"), 
+	        inverseJoinColumns = @JoinColumn(name = "vendor_id"))
+	 		private List <Vendor> vendors;
+	 
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
 	private Date createdAt;
@@ -153,6 +153,14 @@ public class Product {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public List<Vendor> getVendors() {
+		return vendors;
+	}
+
+	public void setVendors(List<Vendor> vendors) {
+		this.vendors = vendors;
 	}
 
 

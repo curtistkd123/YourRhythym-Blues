@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -8,8 +9,12 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.models.Category;
+import com.example.demo.models.Product;
 import com.example.demo.models.User;
 import com.example.demo.models.Vendor;
+import com.example.demo.repositories.CategoryRepository;
+import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.VendorRepository;
 
@@ -20,6 +25,11 @@ public class HomeService {
 	private UserRepository uRepo;
 	@Autowired
 	private VendorRepository vRepo;
+	
+	@Autowired 
+	private CategoryRepository cRepo;
+	@Autowired
+	private ProductRepository pRepo;
 
 	public @Valid Vendor createVendor(@Valid Vendor vendor) {
 		// TODO Auto-generated method stub
@@ -62,4 +72,44 @@ public class HomeService {
 		// TODO Auto-generated method stub
 		return uRepo.save(user);
 	}
+
+	public @Valid Category addCategory(@Valid Category category) {
+		// TODO Auto-generated method stub
+		return cRepo.save(category);
+	}
+
+	public Product addProduct(Product product) {
+		// TODO Auto-generated method stub
+		return pRepo.save(product);
+	}
+
+	public List<Category> AllCategories() {
+		// TODO Auto-generated method stub
+		return (List<Category>) cRepo.findAll();
+	}
+
+	public Vendor findVendor(Long id) {
+		// TODO Auto-generated method stub
+		return vRepo.findById(id).orElse(null);
+	}
+
+	
+		public boolean authenticateVendor(String email, String password) {
+			Vendor vendor = vRepo.findByEmail(email);
+			if (vendor == null) {
+				return false;
+			} else {
+				if (BCrypt.checkpw(password, vendor.getPassword())) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		public @Valid Vendor findByVendorEmail(String email) {
+			// TODO Auto-generated method stub
+			return vRepo.findByEmail(email);
+		}
+	
 }

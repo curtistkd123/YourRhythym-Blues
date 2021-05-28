@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.models.Category;
+import com.example.demo.models.Product;
 import com.example.demo.models.User;
 import com.example.demo.models.Vendor;
 import com.example.demo.services.HomeService;
@@ -117,6 +121,66 @@ public class HomeController {
 		session.setAttribute("id", user.getId());
 		
 		return"/";
+	}
+	
+	//new Product Controller
+	
+	@GetMapping("/newProduct")
+	public String newProduct(@ModelAttribute("product")Product product,@ModelAttribute("category")Category category,Model model) {
+		List<Category> categories = service.AllCategories();
+		
+		model.addAttribute("categories",categories);
+;		return"newProduct.jsp";
+	}
+	
+	
+	@PostMapping("/addCategory")
+	public String addCategory(@Valid @ModelAttribute("category")Category category,BindingResult result){
+		
+		if(result.hasErrors()) {
+			return"newProduct.jsp";
+		}
+		
+		service.addCategory(category);
+			return"redirect:/newProduct";
+	}
+	
+	@PostMapping("/newProduct")
+	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,HttpSession session) {
+		
+		if(result.hasErrors()) {
+			return"newProduct.jsp";
+		}
+		Long id = (Long)session.getAttribute("venid");
+		Vendor vendor = service.findVendor(id);
+		List<Vendor> vendors = product.getVendors();
+		vendors.add(vendor);
+		product.setVendors(vendors);	
+		service.addProduct(product);
+		return"redirect:/newProduct";
+	}
+	
+	@GetMapping("/vendorlogin")
+	public String vlogin(@ModelAttribute("vendor")Vendor vendor) {
+		
+		return "vendorlogin.jsp";
+		
+	}
+	
+	//authenticate
+	@PostMapping("/vendorlogin")
+	public String vlogin(@Valid @ModelAttribute("vendor")Vendor vendor,BindingResult result,Model model,
+			HttpSession session,@RequestParam("email")String email,@RequestParam("password")String password) {
+		
+		boolean authenticate = service.authenticateVendor(email, password);
+		if(!authenticate) {
+			model.addAttribute("error","Email and/or password do not match");
+			return"vendorlogin.jsp";
+		}
+		
+		vendor = service.findByVendorEmail(email);
+		session.setAttribute("venid", vendor.getId());
+		return"redirect:/vdashboard";
 	}
 	
 

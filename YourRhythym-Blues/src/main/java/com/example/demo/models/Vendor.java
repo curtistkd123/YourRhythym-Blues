@@ -2,20 +2,21 @@ package com.example.demo.models;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name="vendors")
@@ -35,7 +36,7 @@ public class Vendor {
 	private String address;
 	
 	@NotNull
-	private Integer phoneNumber;
+	private String phoneNumber;
 	
 	@Email
 	@NotBlank
@@ -47,10 +48,18 @@ public class Vendor {
 	@Transient
 	private String confirmPassword;
 	
+	 @ManyToMany(fetch = FetchType.LAZY)
+	    @JoinTable(
+	        name = "vendor_products", 
+	        joinColumns = @JoinColumn(name = "vendor_id"), 
+	        inverseJoinColumns = @JoinColumn(name = "product_id"))
+	 		private List <Product> ourProducts;
+	 
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User user;
 	
+
 	
 	public Vendor() {
 	}
@@ -87,11 +96,13 @@ public class Vendor {
 		this.address = address;
 	}
 
-	public Integer getPhoneNumber() {
+
+
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -127,9 +138,15 @@ public class Vendor {
 		this.confirmPassword = confirmPassword;
 	}
 
+	public List<Product> getOurProducts() {
+		return ourProducts;
+	}
+
+	public void setOurProducts(List<Product> ourProducts) {
+		this.ourProducts = ourProducts;
+	}
+
 	
-
-
 	
 
 }

@@ -49,23 +49,52 @@
 <body>
 
 
-	<header class="section-header bg-dark">
-
-
+	<header class="section-header">
 		<section class="header-main border-bottom">
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-lg-2 col-4">
 						<a href="http://bootstrap-ecommerce.com" class="brand-wrap"> <img
-							class="logo" src="images1/mainimage.jpg">
+							class="logo" src="images/logo.png">
 						</a>
 						<!-- brand-wrap.// -->
 					</div>
-					<div class="col-lg-6 col-12 text-center">
-						<h1>Rhythym&Blues</h1>
+					<div class="col-lg-6 col-sm-12">
+						<form action="#" class="search">
+							<div class="input-group w-100">
+								<input type="text" class="form-control" placeholder="Search">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="submit">
+										<i class="fa fa-search"></i> Search
+									</button>
+								</div>
+							</div>
+						</form>
+						<!-- search-wrap .end// -->
 					</div>
+					<!-- col.// -->
+					<div class="col-lg-4 col-sm-6 col-12">
+						<div class="widgets-wrap float-md-right">
+							<div class="widget-header  mr-3">
+								<a href="#" class="icon icon-sm rounded-circle border"><i
+									class="fa fa-shopping-cart"></i></a> <span
+									class="badge badge-pill badge-danger notify">0</span>
+							</div>
+							<div class="widget-header icontext">
+								<a href="#" class="icon icon-sm rounded-circle border"><i
+									class="fa fa-user"></i></a>
+								<div class="text">
+									<span class="text-muted">Welcome!</span>
+									<div>
+										<a href="#">Sign in</a> | <a href="#"> Register</a>
+									</div>
+								</div>
+							</div>
 
-
+						</div>
+						<!-- widgets-wrap.// -->
+					</div>
+					<!-- col.// -->
 				</div>
 				<!-- row.// -->
 			</div>
@@ -82,76 +111,47 @@
 
 		<!-- ============================ COMPONENT REGISTER   ================================= -->
 		<div class="card mx-auto" style="max-width: 520px; margin-top: 40px;">
-			<div class="card-body bg-light">
-				<h4 class="card-title mb-4">Profile</h4>
+			<article class="card-body">
+				<header class="mb-4">
+					<h4 class="card-title">Login</h4>
+				</header>
 				<p>
-					<form:errors path="product.*" />
-				</p>
-				<form:form action="/newProduct" method="Post" modelAttribute="product">
+				<c:out value="${error}" />
+			</p>
+				<form:form action="/vendorlogin" method="post" modelAttribute="vendor">
+					
 					<div class="form-group">
-						<img src="bootstrap-ecommerce-html/images/avatars/avatar1.jpg"
-							class="img-sm rounded-circle border">
-					</div>
-					<div class="form-row">
-						<div class="col form-group">
-							<label>Product Name</label>
-							<form:input path="name" type="text" class="form-control"
-								placeholder="product name" />
-						</div>
-						<!-- form-group end.// -->
-						<div class="col form-group">
-							<label>Brand:</label>
-							<form:input path="brand" type="text" class="form-control"
-								placeholder="enter brand" />
-						</div>
-						<!-- form-group end.// -->
-						<div class="col-12 form-group">
-							<label>Description</label>
-							<form:input path="description" type="textarea"
-								class="form-control" placeholder="description" />
-						</div>
-						<!-- form-group end.// -->
-					</div>
-					<!-- form-row end.// -->
-					<div class="form-group">
-						<label>Price</label>
-						<form:input path="price" type="number" step="0.01" class=" col-3 form-control"
-							placeholder="0.00" />
-
-					</div>
-					<div class="col-12 form-group">
-						<label>Category</label>
-						<form:select path="category" type="text" class="form-control"
-							placeholder="description" >
-							<c:forEach items="${categories}" var="c"> 							
-							<form:option value="${c.id }"><c:out value="${c.name}"/></form:option></c:forEach>
-											
-						</form:select>
+						<label>Email</label>
+						<form:input path="email" type="email" class="form-control"
+							placeholder="" />
+						
 					</div>
 					<!-- form-group end.// -->
+					
 
-					<button class="btn btn-primary btn-block">Add Product</button>
-				</form:form>
-				<h5>Dont see your Category? Add it here</h5>
-				<p>
-					<form:errors path="category.*" />
-				</p>
-				<form:form action="/addCategory" method="post"
-					modelAttribute="category">
-					<div class="row">
-						<label></label>
-						<form:input path="name" type="text" class=" col-5 form-control"
-							placeholder="category" />
-						<button class="col-4 btn btn-secondary btn-block">Add
-							Category</button>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label>Password</label>
+							<form:input path="password" class="form-control" type="password" />
+						</div>
+						<!-- form-group end.// -->
+						
 					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">
+							Login</button>
+					</div>
+					
 				</form:form>
-			</div>
+			</article>
 			<!-- card-body.// -->
 		</div>
 		<!-- card .// -->
-
-		<br> <br>
+		<p class="text-center mt-4">
+			Want to add your business? <a href="/newVendor">Log In</a>
+		</p>
+		<br>
+		<br>
 		<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 
 
