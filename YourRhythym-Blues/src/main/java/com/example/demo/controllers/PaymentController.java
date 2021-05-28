@@ -61,12 +61,12 @@ public class PaymentController {
 	}
 	
 
-	@GetMapping("/addCartItem/${product_id}")
+	@GetMapping("/addCartItem/{product_id}")
 	public String createCartItem(@ModelAttribute("cartItem") CartItem cartItem, @PathVariable("product_id") Long id, HttpSession session, Model viewModel) {
 		Long userId = (Long)session.getAttribute("user_id");
 		User user = this.service.findUserById(userId);
-		Long productid = id;
-		Product product = this.pService.findProduct(productid);
+		Long product_id = id;
+		Product product = this.pService.findProduct(product_id);
 		cartItem.setProduct(product);
 		cartItem.setUser(user);
 		this.pService.createCartItem(cartItem);
