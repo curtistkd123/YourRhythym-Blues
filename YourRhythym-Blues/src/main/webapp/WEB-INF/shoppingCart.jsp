@@ -62,7 +62,7 @@
                 </div>
             </div>
         </header>
-<h1>Shopping Cart</h1>
+<h1>Shopping Cart for ${user.firstName }</h1>
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
