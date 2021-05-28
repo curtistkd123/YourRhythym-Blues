@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
+
 <head>
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -26,12 +27,12 @@
 		<aside class="col-md-6">
 <article class="gallery-wrap">
 <div class="img-big-wrap">
-  <div> <a href="#"><img src="/images1/${product.img1 }"></a></div>
+  <div> <a href="#"><img src="/images1/"></a></div>
 </div> <!-- slider-product.// -->
 <div class="thumbs-wrap">
-  <a href="#" class="item-thumb"> <img src="/images1/${product.img2 }"></a>
-  <a href="#" class="item-thumb"> <img src="/images1/${product.img3 }"></a>
-  <a href="#" class="item-thumb"> <img src="/images1/${product.img4 }"></a>
+  <a href="#" class="item-thumb"> <img src="/images1/"></a>
+  <a href="#" class="item-thumb"> <img src="/images1/"></a>
+  <a href="#" class="item-thumb"> <img src="/images1/"></a>
 </div> <!-- slider-nav.// -->
 </article> <!-- gallery-wrap .end// -->
 		</aside>
@@ -73,28 +74,27 @@
   <dd class="col-sm-9">${product.category }</dd>
 
   <dt class="col-sm-3">Vendor</dt>
-  <dd class="col-sm-9">${product.vendor } </dd>
+  <dd class="col-sm-9">${product.vendors } </dd>
 </dl>
 
 <hr>
-	<div class="form-row">
-		<div class="form-group col-md flex-grow-0">
+
+	<div class="form-group col">
+		<form>
 			<label>Quantity</label>
-			<div class="input-group mb-3 input-spinner">
-			  <div class="input-group-prepend">
-			    <button class="btn btn-light" type="button" id="button-plus"> + </button>
-			  </div>
-			  <input type="text" class="form-control" value="1">
-			  <div class="input-group-append">
-			    <button class="btn btn-light" type="button" id="button-minus"> − </button>
-			  </div>
-			</div>
-		</div> <!-- col.// -->
-
-	</div> <!-- row.// -->
+	
+			<select class="form-control" name="quantity">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+		</form>
+	</div>
 
 
-	<a href="/addCartItem/${product.id }" class="btn  btn-outline-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
+
+	<a href="/addCartItem${product.id }" class="btn  btn-outline-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
 		
 </article> <!-- product-info-aside .// -->
 		</main> <!-- col.// -->
