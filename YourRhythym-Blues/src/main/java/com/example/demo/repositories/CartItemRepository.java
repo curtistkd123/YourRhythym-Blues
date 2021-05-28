@@ -9,6 +9,6 @@ import com.example.demo.models.CartItem;
 
 @Repository
 public interface CartItemRepository extends CrudRepository<CartItem, Long>{
-	 
+	 List<CartItem> findAll();
 
 }
