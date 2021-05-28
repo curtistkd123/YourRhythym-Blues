@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.models.CartItem;
 import com.example.demo.models.Order;
@@ -61,21 +62,31 @@ public class PaymentController {
 	}
 	
 
-	@GetMapping("/addCartItem/{product_id}")
-	public String createCartItem(@ModelAttribute("cartItem") CartItem cartItem, @PathVariable("product_id") Long id, HttpSession session, Model viewModel) {
-		Long userId = (Long)session.getAttribute("user_id");
+	@GetMapping("/addCartItem{product_id}")
+	public String cartItem(@ModelAttribute("cartItem") CartItem cartItem) {
+		return "redirect:/";
+	}
+	
+			
+	@PostMapping("/addCartItem{product_id}")
+	public String createCartItem(@Valid @ModelAttribute("cartItem") CartItem cartItem, BindingResult result, @PathVariable("product_id") Long pid,
+			@RequestParam(name="quantity") Integer quantity, HttpSession session, Model viewModel) {
+		Long userId = (Long)session.getAttribute("userid");
 		User user = this.service.findUserById(userId);
-		Long product_id = id;
+		Long product_id = pid;
 		Product product = this.pService.findProduct(product_id);
 		cartItem.setProduct(product);
 		cartItem.setUser(user);
+		cartItem.setQuantity(quantity);
 		this.pService.createCartItem(cartItem);
 		return "redirect:/index";
 	}
 	
+
+	
 	@GetMapping("/shoppingCart{cartItem_id}")
-	public String shoppingCart(@PathVariable("cartItem_id") Long id, Model viewModel, HttpSession session) {
-		Long user_id = (Long)session.getAttribute("user_id");
+	public String shoppingCart(@PathVariable("cartItem_id") Long id,  Model viewModel, HttpSession session) {
+		Long user_id = (Long)session.getAttribute("userid");
 		User user = pService.findUserById(user_id);	
 		List<CartItem> cartItems = this.pService.allCartItems();
 		viewModel.addAttribute("cartItem", cartItems);
@@ -85,7 +96,7 @@ public class PaymentController {
 	
 	@PostMapping("/shoppingCart/checkOut")
 	public String createOrderItem(@ModelAttribute("orderItem") Order order, HttpSession session) {
-		Long userId = (Long)session.getAttribute("user_id");
+		Long userId = (Long)session.getAttribute("userid");
 		User user = this.service.findUserById(userId);
 		order.setUser(user);
 		this.pService.createOrderItem(order);
@@ -99,7 +110,7 @@ public class PaymentController {
 	
 	@PostMapping("/shoppingCart/Checkout/paymentDetail")
 	public String createOrderDetail(@ModelAttribute("orderDetail") OrderDetail orderDetail, HttpSession session, Model viewModel) {
-		Long userId = (Long)session.getAttribute("user_id");
+		Long userId = (Long)session.getAttribute("userid");
 		User user = this.service.findUserById(userId);
 		orderDetail.setUser(user);
 		this.pService.createOrderDetail(orderDetail);
