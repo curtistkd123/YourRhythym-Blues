@@ -111,5 +111,15 @@ public class HomeService {
 			// TODO Auto-generated method stub
 			return vRepo.findByEmail(email);
 		}
+
+		public void createDirectory(String imgdir) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public Category findCategory(Long cid) {
+			// TODO Auto-generated method stub
+			return cRepo.findById(cid).orElse(null);
+		}
 	
 }

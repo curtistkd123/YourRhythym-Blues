@@ -122,22 +122,24 @@
 					<div class="col-12 form-group">
 						<label>Category</label>
 						<form:select path="category" type="text" class="form-control"
-							placeholder="description" >
+							placeholder="" >
 							<c:forEach items="${categories}" var="c"> 							
 							<form:option value="${c.id }"><c:out value="${c.name}"/></form:option></c:forEach>
 											
 						</form:select>
 					</div>
 					<!-- form-group end.// -->
-
+					<form:hidden path="vendors" value="${vendor}"/>
 					<button class="btn btn-primary btn-block">Add Product</button>
 				</form:form>
 				<h5>Dont see your Category? Add it here</h5>
 				<p>
 					<form:errors path="category.*" />
 				</p>
-				<form:form action="/addCategory" method="post"
-					modelAttribute="category">
+				<form:form action="/addCategory" method="post" modelAttribute="category">
+				<p>
+					<form:errors path="category.*" />
+				</p>
 					<div class="row">
 						<label></label>
 						<form:input path="name" type="text" class=" col-5 form-control"

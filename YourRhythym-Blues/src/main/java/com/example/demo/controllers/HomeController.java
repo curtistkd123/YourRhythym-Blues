@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -126,9 +127,10 @@ public class HomeController {
 	//new Product Controller
 	
 	@GetMapping("/newProduct")
-	public String newProduct(@ModelAttribute("product")Product product,@ModelAttribute("category")Category category,Model model) {
+	public String newProduct(@ModelAttribute("product")Product product,@ModelAttribute("category")Category category,Model model,HttpSession session) {
 		List<Category> categories = service.AllCategories();
-		
+		Vendor vendor = service.findVendor((Long) session.getAttribute("venId"));
+		model.addAttribute("vendor",vendor);
 		model.addAttribute("categories",categories);
 ;		return"newProduct.jsp";
 	}
@@ -145,19 +147,26 @@ public class HomeController {
 			return"redirect:/newProduct";
 	}
 	
-	@PostMapping("/newProduct")
-	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,HttpSession session) {
+	@PostMapping("/newProduct{id}")
+	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,@PathVariable("id")Long cid,HttpSession session) {
 		
 		if(result.hasErrors()) {
 			return"newProduct.jsp";
 		}
-		Long id = (Long)session.getAttribute("venid");
+		Category cat = service.findCategory(cid);
+		product.setCategory(cat);
+		Long id = (Long)session.getAttribute("venId");
 		Vendor vendor = service.findVendor(id);
 		List<Vendor> vendors = product.getVendors();
 		vendors.add(vendor);
 		product.setVendors(vendors);	
 		service.addProduct(product);
-		return"redirect:/newProduct";
+		String imgdir = vendor.getName()+"/"+product.getName();
+		product.setImgDir(imgdir);
+		service.createDirectory(imgdir);
+		System.out.println(product.getCategory());
+		
+		return"redirect:/vdashboard";
 	}
 	
 	@GetMapping("/vendorlogin")

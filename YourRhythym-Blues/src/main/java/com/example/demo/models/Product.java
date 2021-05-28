@@ -46,6 +46,8 @@ public class Product {
 	@NotNull
 	private float price;
 	
+	private String imgDir;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")
 	private Category category;
@@ -163,6 +165,15 @@ public class Product {
 		this.vendors = vendors;
 	}
 
+	public String getImgDir() {
+		return imgDir;
+	}
+
+	public void setImgDir(String imgDir) {
+		this.imgDir = imgDir;
+	}
+
+	
 
 
 }
