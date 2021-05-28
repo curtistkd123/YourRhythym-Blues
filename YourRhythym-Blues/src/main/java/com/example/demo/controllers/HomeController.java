@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -137,33 +138,34 @@ public class HomeController {
 	
 	
 	@PostMapping("/addCategory")
-	public String addCategory(@Valid @ModelAttribute("category")Category category,BindingResult result){
-		
-		if(result.hasErrors()) {
-			return"newProduct.jsp";
-		}
-		
+	public String addCategory(@RequestParam(name="category")String name){
+		Category category = new Category();
+		category.setName(name);	
 		service.addCategory(category);
 			return"redirect:/newProduct";
 	}
 	
 	@PostMapping("/newProduct{id}")
-	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,@PathVariable("id")Long cid,HttpSession session) {
+	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,HttpSession session) {
 		
 		if(result.hasErrors()) {
 			return"newProduct.jsp";
 		}
-		Category cat = service.findCategory(cid);
-		product.setCategory(cat);
+		
+		
 		Long id = (Long)session.getAttribute("venId");
 		Vendor vendor = service.findVendor(id);
-		List<Vendor> vendors = product.getVendors();
+		
+		List<Vendor> vendors = new ArrayList<Vendor>();
+		product.setVendors(vendors);
 		vendors.add(vendor);
 		product.setVendors(vendors);	
-		service.addProduct(product);
+		
 		String imgdir = vendor.getName()+"/"+product.getName();
-		product.setImgDir(imgdir);
+		
+		product.setImgDir(imgdir.replaceAll("\\s", ""));
 		service.createDirectory(imgdir);
+		service.addProduct(product);
 		System.out.println(product.getCategory());
 		
 		return"redirect:/vdashboard";
@@ -188,8 +190,16 @@ public class HomeController {
 		}
 		
 		vendor = service.findByVendorEmail(email);
-		session.setAttribute("venid", vendor.getId());
+		session.setAttribute("venId", vendor.getId());
 		return"redirect:/vdashboard";
+	}
+	
+	@GetMapping("/vdashboard")
+	public String vdash(Model model,HttpSession session) {
+		Long id = (Long) session.getAttribute("venId");
+		Vendor vendor = service.findVendor(id);
+		model.addAttribute("vendor",vendor);
+		return "vdashboard.jsp";
 	}
 	
 

@@ -85,59 +85,24 @@
 			<div class="card-body bg-light">
 				<h4 class="card-title mb-4">Profile</h4>
 				<p>
-					<form:errors path="product.*" />
+					<form:errors path="category.*" />
 				</p>
-				<form:form action="/newProduct" method="Post" modelAttribute="product">
-					<div class="form-group">
-						<img src="bootstrap-ecommerce-html/images/avatars/avatar1.jpg"
-							class="img-sm rounded-circle border">
+				<form:form action="/addCategory" method="post" modelAttribute="category">
+				<p>
+					<form:errors path="category.*" />
+				</p>
+					<div class="row">
+						<label></label>
+						<form:input path="name" type="text" class=" col-5 form-control"
+							placeholder="category" />
+						<button class="col-4 btn btn-secondary btn-block">Add
+							Category</button>
 					</div>
-					<div class="form-row">
-						<div class="col form-group">
-							<label>Product Name</label>
-							<form:input path="name" type="text" class="form-control"
-								placeholder="product name" />
-						</div>
-						<!-- form-group end.// -->
-						<div class="col form-group">
-							<label>Brand:</label>
-							<form:input path="brand" type="text" class="form-control"
-								placeholder="enter brand" />
-						</div>
-						<!-- form-group end.// -->
-						<div class="col-12 form-group">
-							<label>Description</label>
-							<form:input path="description" type="textarea"
-								class="form-control" placeholder="description" />
-						</div>
-						<!-- form-group end.// -->
-					</div>
-					<!-- form-row end.// -->
-					<div class="form-group">
-						<label>Price</label>
-						<form:input path="price" type="number" step="0.01" class=" col-3 form-control"
-							placeholder="0.00" />
-
-					</div>
-					<div class="col-12 form-group">
-						<label>Category</label>
-						<form:select path="category" type="text" class="form-control"
-							placeholder="" >
-							<c:forEach items="${categories}" var="c"> 							
-							<form:option value="${c.id}"><c:out value="${c.name}"/></form:option></c:forEach>
-											
-						</form:select>
-					</div>
-					<!-- form-group end.// -->
-					
-					<button class="btn btn-primary btn-block">Add Product</button>
+				
+					<button class="btn btn-primary btn-block">Create Category</button>
 				</form:form>
-				<h5>Dont see your Category? Add it here</h5>
-				<form:form name="category" action="/addCategory" method="post">
-				<input type="text" name="category" placeholder="category name">
-				 <input type="submit" value="Add" class="btn">
-				</form:form>
-			
+				<a href="/newProduct"><h5>New Product? </h5></a>
+				
 			</div>
 			<!-- card-body.// -->
 		</div>
