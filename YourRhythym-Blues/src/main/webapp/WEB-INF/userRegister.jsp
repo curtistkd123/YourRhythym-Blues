@@ -177,7 +177,7 @@
 						<label class="custom-control custom-checkbox"> <input
 							type="checkbox" class="custom-control-input" checked="">
 							<div class="custom-control-label">
-								I am agree with <a href="#">terms and conditions</a>
+								I do agree with <a href="#">terms and conditions</a>
 							</div>
 						</label>
 					</div>

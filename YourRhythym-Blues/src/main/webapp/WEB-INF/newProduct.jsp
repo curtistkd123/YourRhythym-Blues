@@ -129,8 +129,7 @@
 						</form:select>
 					</div>
 					<!-- form-group end.// -->
-					<label class="bg-dark">Upload Images:</label>
-					<input type="file" path="images" name="images" size="50" accept="image/png, image/jpeg, image/jpg">
+					
 					
 					<button class="btn btn-primary btn-block">Add Product</button>
 				</form:form>

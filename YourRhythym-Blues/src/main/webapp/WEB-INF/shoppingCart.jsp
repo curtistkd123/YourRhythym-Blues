@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +49,7 @@
                         <a href="/shoppingCart" class="btn btn-outline-dark" >
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">${user.cartItems.size() }</span>
                         </a>
                     </form>
                 </div>
@@ -79,13 +81,14 @@
 </tr>
 </thead>
 <tbody>
+<c:forEach items="${cart}" var="c">
 <tr>
 	<td>
 		<figure class="itemside align-items-center">
-			<div class="aside"><img src="bootstrap-ecommerce-html/images/items/1.jpg" class="img-sm"></div>
+			<div class="aside"><img src="images1/${c.product.name}.jpg"  class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">Camera Canon EOS M50 Kit</a>
-				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+				<a href="#" class="title text-dark"><c:out value="${c.product.name}"/></a>
+				<p class="text-muted small"> ${c.product.description} <br> Brand: ${c.product.brand }</p>
 			</figcaption>
 		</figure>
 	</td>
@@ -99,72 +102,18 @@
 	</td>
 	<td>
 		<div class="price-wrap">
-			<var class="price">$1156.00</var>
-			<small class="text-muted"> $315.20 each </small>
+		
+			<var class="price">$<c:out value="${c.total}"/></var>
+			<small class="text-muted"> $<c:out value="${c.product.price}"/> each </small>
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right d-none d-md-block">
 	<a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
-	<a href="" class="btn btn-light"> Remove</a>
+	<a href="/shoppingCart${user.id}/delete${c.id}" class="btn btn-light"> Remove</a>
 	</td>
 </tr>
-<tr>
-	<td>
-		<figure class="itemside align-items-center">
-			<div class="aside"><img src="bootstrap-ecommerce-html/images/items/2.jpg" class="img-sm"></div>
-			<figcaption class="info">
-				<a href="#" class="title text-dark">ADATA Premier ONE microSDXC</a>
-				<p class="text-muted small">Size: 256 GB  <br> Brand: ADATA </p>
-			</figcaption>
-		</figure>
-	</td>
-	<td>
-		<select class="form-control">
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-			<option>4</option>
-		</select>
-	</td>
-	<td>
-		<div class="price-wrap">
-			<var class="price">$149.97</var>
-			<small class="text-muted"> $75.00 each </small>
-		</div> <!-- price-wrap .// -->
-	</td>
-	<td class="text-right d-none d-md-block">
-	<a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
-	<a href="" class="btn btn-light btn-round"> Remove</a>
-	</td>
-</tr>
-<tr>
-	<td>
-		<figure class="itemside align-items-center">
-			<div class="aside"><img src="bootstrap-ecommerce-html/images/items/3.jpg" class="img-sm"></div>
-			<figcaption class="info">
-				<a href="#" class="title text-dark">Gamepad Sony DualShock 4</a>
-				<p class="small text-muted">Version: CUH-ZCT2E  <br> Brand: Sony</p>
-			</figcaption>
-		</figure>
-	</td>
-	<td>
-		<select class="form-control">
-			<option>1</option>
-			<option>2</option>
-			<option>3</option>
-		</select>
-	</td>
-	<td>
-		<div class="price-wrap">
-			<var class="price">$98.00</var>
-			<small class="text-muted"> $578.00 each</small>
-		</div> <!-- price-wrap .// -->
-	</td>
-	<td class="text-right d-none d-md-block">
-		<a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
-		<a href="" class="btn btn-light btn-round"> Remove</a>
-	</td>
-</tr>
+</c:forEach>
+
 </tbody>
 </table>
 
@@ -199,7 +148,7 @@
 <div class="card-body">
 		<dl class="dlist-align">
 		  <dt>Total price:</dt>
-		  <dd class="text-right">$69.97</dd>
+		  <dd class="text-right"><c:out value="${cartTotal}"/></dd>
 		</dl>
 		<dl class="dlist-align">
 		  <dt>Discount:</dt>

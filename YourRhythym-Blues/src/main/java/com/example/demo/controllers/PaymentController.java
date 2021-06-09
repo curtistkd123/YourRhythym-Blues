@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.models.CartItem;
@@ -63,7 +65,26 @@ public class PaymentController {
 	
 
 	@GetMapping("/addCartItem{product_id}")
-	public String cartItem(@ModelAttribute("cartItem") CartItem cartItem) {
+	public String cartItem(@ModelAttribute("cartItem") CartItem cartItem,@PathVariable("product_id")Long id,HttpSession session,Model model) {
+		if (session.getAttribute("cart")==null) {
+			List<CartItem> cart = new ArrayList<CartItem>();
+			session.setAttribute("cart", cart);
+		}
+	
+		Long userId = (Long)session.getAttribute("userid");
+		User user = this.service.findUserById(userId);
+		
+			Product product = service.findProduct(id);
+			cartItem.setProduct(product);
+			cartItem.setUser(user);
+			this.pService.createCartItem(cartItem);
+			cartItem.setQuantity(cartItem.getQuantity()+1);
+			List <CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+			cart.add(cartItem);
+			session.setAttribute("cart", cart);
+			this.pService.createCartItem(cartItem);
+					
+	
 		return "redirect:/";
 	}
 	
@@ -84,15 +105,23 @@ public class PaymentController {
 	
 
 	
-	@GetMapping("/shoppingCart{cartItem_id}")
-	public String shoppingCart(@PathVariable("cartItem_id") Long id,  Model viewModel, HttpSession session) {
-		Long user_id = (Long)session.getAttribute("userid");
-		User user = pService.findUserById(user_id);	
-		List<CartItem> cartItems = this.pService.allCartItems();
-		viewModel.addAttribute("cartItem", cartItems);
+	@GetMapping("/shoppingCart{user_id}")
+	public String shoppingCart(@PathVariable("user_id") Long id,  Model viewModel, HttpSession session) {
+		User user = pService.findUserById(id);	
+		List<CartItem> cartItems = user.getCartItems();
+		viewModel.addAttribute("cart", cartItems);
 		viewModel.addAttribute("user", user);
+		
+		float cartTotal = 0;
+		for(CartItem c: cartItems) {
+			cartTotal += c.getTotal();
+		}
+		
+		viewModel.addAttribute("cartTotal",cartTotal);
 		return "shoppingCart.jsp";
 	}
+	
+	
 	
 	@PostMapping("/shoppingCart/checkOut")
 	public String createOrderItem(@ModelAttribute("orderItem") Order order, HttpSession session) {
@@ -105,6 +134,7 @@ public class PaymentController {
 	
 	@GetMapping("/reviewCart")
 	public String checkOut(@ModelAttribute("orderItem") Order order) {
+		
 		return "checkOut.jsp";
 	}
 	
@@ -122,6 +152,16 @@ public class PaymentController {
 		return "paymentDetail.jsp";
 	}
 
+	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
+	public String deleteCartItem(@PathVariable("id") Long id,@PathVariable("userid")Long userid) {
+		User user = service.findUserById(userid);
+		List<CartItem> cart = user.getCartItems();
+		cart.remove(pService.findCartItem(id));
+		pService.deleteCartItem(id);
+		
 	
+		return"redirect:/shoppingCart{userid}";
+
 	
+	}
 }

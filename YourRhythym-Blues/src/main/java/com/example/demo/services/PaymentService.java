@@ -94,4 +94,9 @@ public class PaymentService {
 		return product;
 	}
 	
+	public void deleteCartItem(Long id) {
+		this.cartRepo.deleteById(id);
+	}
+
+	
 }

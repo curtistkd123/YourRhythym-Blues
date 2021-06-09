@@ -68,9 +68,17 @@ public class HomeService {
 		return uRepo.findByEmail(email);
 	}
 
-	public @Valid User updateUser(@Valid User user) {
+	public @Valid User updateUser(Long id, User user) {
 		// TODO Auto-generated method stub
-		return uRepo.save(user);
+		List<User> users = (List<User>) uRepo.findAll();
+		for (User u: users) {
+			if (u.getId()==id) {
+				u = user;
+				 return uRepo.save(u);
+			}
+		}
+		return null;
+
 	}
 
 	public @Valid Category addCategory(@Valid Category category) {
@@ -125,6 +133,11 @@ public class HomeService {
 		public List<Product> findAllProducts() {
 			// TODO Auto-generated method stub
 			return (List<Product>) pRepo.findAll();
+		}
+
+		public Product findProduct(Long id) {
+			// TODO Auto-generated method stub
+			return pRepo.findById(id).orElse(null);
 		}
 	
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.models.CartItem;
 import com.example.demo.models.Category;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
@@ -32,187 +33,189 @@ import com.example.demo.validators.VendorValidator;
 
 @Controller
 public class HomeController {
-	
-	
+
 	@Autowired
 	private UserValidator uValidate;
-	
+
 	@Autowired
 	private VendorValidator vValidate;
-	
+
 	@Autowired
 	private HomeService service;
-	
+
 	@GetMapping("/")
-	public String index(HttpSession session,Model model) {
-		if(session.getAttribute("userid")==null) {
-			
-			return"redirect:/login";
+	public String index(HttpSession session, Model model) {
+		if (session.getAttribute("userid") == null) {
+
+			return "redirect:/login";
 		}
-		
+		if (session.getAttribute("cart") == null) {
+			List<CartItem> cart = new ArrayList<CartItem>();
+			session.setAttribute("cart", cart);
+		}
+
 		List<Product> products = service.findAllProducts();
-			User user = service.findUserById((Long)session.getAttribute("userid"));
-			model.addAttribute("user",user);
-			model.addAttribute("products",products);
-		return"index.jsp";
+		User user = service.findUserById((Long) session.getAttribute("userid"));
+		model.addAttribute("user", user);
+		model.addAttribute("products", products);
+		List<CartItem> cart = user.getCartItems();
+		// List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+		model.addAttribute("cart", cart);
+		return "index.jsp";
 	}
-	
+
 	@GetMapping("/newVendor")
-	public String newVendor(@ModelAttribute("vendor")Vendor vendor) {
-		return"newVendor.jsp";
+	public String newVendor(@ModelAttribute("vendor") Vendor vendor) {
+		return "newVendor.jsp";
 	}
-	
+
 	@PostMapping("/newVendor")
-	public String createVendor(@Valid @ModelAttribute("vendor")Vendor vendor,BindingResult result,HttpSession session) {
+	public String createVendor(@Valid @ModelAttribute("vendor") Vendor vendor, BindingResult result,
+			HttpSession session) {
 		vValidate.validate(vendor, result);
-		if(result.hasErrors()) {
-			return"newVendor.jsp";
+		if (result.hasErrors()) {
+			return "newVendor.jsp";
 		}
 		service.createVendor(vendor);
 		session.setAttribute("venId", vendor.getId());
-	
-		return"vdashboard.jsp";
+
+		return "vdashboard.jsp";
 	}
+
 	@GetMapping("/register")
-	public String signup(@ModelAttribute("user")User user) {
-		
-		return"userRegister.jsp";
+	public String signup(@ModelAttribute("user") User user) {
+
+		return "userRegister.jsp";
 	}
-	
+
 	@PostMapping("/register")
-	public String createUser(@Valid @ModelAttribute("user")User user,BindingResult result,HttpSession session) {
+	public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
 		uValidate.validate(user, result);
-		if(result.hasErrors()) {
-			return"userRegister.jsp";
+		if (result.hasErrors()) {
+			return "userRegister.jsp";
 		}
 		service.createUser(user);
 		session.setAttribute("userid", user.getId());
-		
-		return"redirect:/";
+
+		return "redirect:/";
 	}
-	
+
 	@GetMapping("/login")
-	public String ulogin(@ModelAttribute("user")User user) {
-		
+	public String ulogin(@ModelAttribute("user") User user) {
+
 		return "userlogin.jsp";
-		
+
 	}
-	
-	//authenticate
+
+	// authenticate
 	@PostMapping("/login")
-	public String login(@Valid @ModelAttribute("user")User user,BindingResult result,Model model,
-			HttpSession session,@RequestParam("email")String email,@RequestParam("password")String password) {
-		
+	public String login(@Valid @ModelAttribute("user") User user, BindingResult result, Model model,
+			HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
+
 		boolean authenticate = service.authenticateUser(email, password);
-		if(!authenticate) {
-			model.addAttribute("error","Email and/or password do not match");
-			return"userlogin.jsp";
+		if (!authenticate) {
+			model.addAttribute("error", "Email and/or password do not match");
+			return "userlogin.jsp";
 		}
-		
+
 		user = service.findByEmail(email);
 		session.setAttribute("userid", user.getId());
-		return"redirect:/";
+		return "redirect:/";
 	}
-	
+
 	@GetMapping("/edituser{id}")
-	public String editUser(@ModelAttribute("user")User user,@PathVariable("id")Long id,Model model) {
+	public String editUser(@ModelAttribute("user") User user, @PathVariable("id") Long id, Model model) {
 		user = service.findUserById(id);
-		model.addAttribute("user",user);
-		return"editUser.jsp";
+		model.addAttribute("user", user);
+		return "editUser.jsp";
 	}
-	
+
 	@PostMapping("/edituser{id}")
-	public String updateUser(@Valid @ModelAttribute("user")User user,BindingResult result,HttpSession session,@PathVariable("id")Long id) {
-		user = service.findUserById(id);
-		if(result.hasErrors()) {
-			return"editUser.jsp";
+	public String updateUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session,
+			@PathVariable("id") Long id) {
+		
+		if (result.hasErrors()) {
+			return "editUser.jsp";
 		}
-		
-		service.updateUser(user);
+
+		service.updateUser(id,user);
 		session.setAttribute("id", user.getId());
-		
-		return"/";
+	
+		return "redirect:/";
 	}
-	
-	//new Product Controller
-	
+
+	// new Product Controller
+
 	@GetMapping("/newProduct")
-	public String newProduct(@ModelAttribute("product")Product product,@ModelAttribute("category")Category category,Model model,HttpSession session) {
+	public String newProduct(@ModelAttribute("product") Product product, @ModelAttribute("category") Category category,
+			Model model, HttpSession session) {
 		List<Category> categories = service.AllCategories();
 		Vendor vendor = service.findVendor((Long) session.getAttribute("venId"));
-		model.addAttribute("vendor",vendor);
-		model.addAttribute("categories",categories);
-;		return"newProduct.jsp";
+		model.addAttribute("vendor", vendor);
+		model.addAttribute("categories", categories);
+		;
+		return "newProduct.jsp";
 	}
-	
-	
+
 	@PostMapping("/addCategory")
-	public String addCategory(@RequestParam(name="category")String name){
+	public String addCategory(@RequestParam(name = "category") String name) {
 		Category category = new Category();
-		category.setName(name);	
+		category.setName(name);
 		service.addCategory(category);
-			return"redirect:/newProduct";
+		return "redirect:/newProduct";
 	}
-	
+
 	@PostMapping("/newProduct{id}")
-	public String createProduct(@Valid @ModelAttribute("product")Product product,BindingResult result,
-			HttpSession session,@RequestParam("images") MultipartFile multipartFile) throws IOException {
-		
-		if(result.hasErrors()) {
-			return"newProduct.jsp";
+	public String createProduct(@Valid @ModelAttribute("product") Product product, BindingResult result,
+			HttpSession session, @RequestParam("images") MultipartFile multipartFile) throws IOException {
+
+		if (result.hasErrors()) {
+			return "newProduct.jsp";
 		}
-		
-		
-		Long id = (Long)session.getAttribute("venId");
+
+		Long id = (Long) session.getAttribute("venId");
 		Vendor vendor = service.findVendor(id);
-		
+
 		List<Vendor> vendors = new ArrayList<Vendor>();
 		product.setVendors(vendors);
 		vendors.add(vendor);
-		product.setVendors(vendors);	
-		String imgdir = vendor.getName()+"/"+product.getName();
-		product.setImgDir(imgdir.replaceAll("\\s", ""));
-		service.createDirectory(imgdir);
-		
-		String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		String uploadDir = "images/"+product.getImgDir();
-		FileUploadUtil.saveFile(uploadDir,filename, multipartFile);
+		product.setVendors(vendors);
+
 		service.addProduct(product);
 		System.out.println(product.getCategory());
-		
-		return"redirect:/vdashboard";
+
+		return "redirect:/vdashboard";
 	}
-	
+
 	@GetMapping("/vendorlogin")
-	public String vlogin(@ModelAttribute("vendor")Vendor vendor) {
-		
+	public String vlogin(@ModelAttribute("vendor") Vendor vendor) {
+
 		return "vendorlogin.jsp";
-		
+
 	}
-	
-	//authenticate
+
+	// authenticate
 	@PostMapping("/vendorlogin")
-	public String vlogin(@Valid @ModelAttribute("vendor")Vendor vendor,BindingResult result,Model model,
-			HttpSession session,@RequestParam("email")String email,@RequestParam("password")String password) {
-		
+	public String vlogin(@Valid @ModelAttribute("vendor") Vendor vendor, BindingResult result, Model model,
+			HttpSession session, @RequestParam("email") String email, @RequestParam("password") String password) {
+
 		boolean authenticate = service.authenticateVendor(email, password);
-		if(!authenticate) {
-			model.addAttribute("error","Email and/or password do not match");
-			return"vendorlogin.jsp";
+		if (!authenticate) {
+			model.addAttribute("error", "Email and/or password do not match");
+			return "vendorlogin.jsp";
 		}
-		
+
 		vendor = service.findByVendorEmail(email);
 		session.setAttribute("venId", vendor.getId());
-		return"redirect:/vdashboard";
+		return "redirect:/vdashboard";
 	}
-	
+
 	@GetMapping("/vdashboard")
-	public String vdash(Model model,HttpSession session) {
+	public String vdash(Model model, HttpSession session) {
 		Long id = (Long) session.getAttribute("venId");
 		Vendor vendor = service.findVendor(id);
-		model.addAttribute("vendor",vendor);
+		model.addAttribute("vendor", vendor);
 		return "vdashboard.jsp";
 	}
-	
 
 }

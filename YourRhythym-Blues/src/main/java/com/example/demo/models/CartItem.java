@@ -14,8 +14,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -30,9 +32,7 @@ public class CartItem {
 	private Long id;
 	
 	
-//	@ManyToOne(fetch=FetchType.LAZY)
-//	@JoinColumn(name="session_id")
-//	private ShoppingSession shoppingSession;
+
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
@@ -45,7 +45,7 @@ public class CartItem {
 	private Product product;
 	
 	@NotNull
-	private Integer quantity;
+	private Integer quantity = 0;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
@@ -54,6 +54,10 @@ public class CartItem {
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
 	private Date updatedAt;
+
+	@Transient
+	private float total;
+
 	
 	@PrePersist
 	protected void onCreate() {
@@ -76,13 +80,7 @@ public class CartItem {
 		this.id = id;
 	}
 
-//	public ShoppingSession getShoppingSession() {
-//		return shoppingSession;
-//	}
-//
-//	public void setShoppingSession(ShoppingSession shoppingSession) {
-//		this.shoppingSession = shoppingSession;
-//	}
+
 	
 	public User getUser() {
 		return user;
@@ -123,5 +121,16 @@ public class CartItem {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public float getTotal() {
+		return this.getQuantity()*this.product.getPrice();
+	}
+
+	public void setTotal(float total) {
+		this.total = this.getQuantity()*this.product.getPrice();
+	}
+	
+	
+	
 	
 }

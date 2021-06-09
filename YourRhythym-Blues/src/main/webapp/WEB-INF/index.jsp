@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,12 +60,14 @@
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
 				</ul>
-				<form class="d-flex">
-					<button class="btn btn-outline-dark" type="submit">
+				<form:form action="/shoppingCart${user.id}" method="get" class="d-flex">
+				
+					<button class="btn btn-outline-dark" onclick="/shoppingCart${user.id}" type="submit">
 						<i class="bi-cart-fill me-1"></i> Cart <span
-							class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+							class="badge bg-dark text-white ms-1 rounded-pill"><c:out value="${cart.size() }"/></span>
 					</button>
-				</form>
+					
+				</form:form>
 			</div>
 		</div>
 	</nav>
@@ -87,7 +90,7 @@
 					<div class="col mb-5">
 						<div class="card h-100">
 							<!-- Product image-->
-							<img class="card-img-top" src="images1/basicguitar.jpg" alt="..." />
+							<img class="card-img-top" src="images1/${p.name}.jpg" alt="..." />
 							<!-- Product details-->
 							<div class="card-body p-4">
 								<div class="text-center">
@@ -96,14 +99,13 @@
 										<c:out value="${p.name }" />
 									</h5>
 									<!-- Product price-->
-									$40.00 - $80.00
+								$<c:out value="${p.price }"/>
 								</div>
 							</div>
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="#">View
-										options</a>
+									<a class="btn btn-outline-dark mt-auto" href="/addCartItem${p.id}">Add to Cart</a>
 								</div>
 							</div>
 						</div>
