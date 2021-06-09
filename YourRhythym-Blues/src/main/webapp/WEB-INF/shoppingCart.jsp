@@ -84,8 +84,8 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="bootstrap-ecommerce-html/images/items/1.jpg" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">Camera Canon EOS M50 Kit</a>
-				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+				<a href="#" class="title text-dark">${cartItem.product.name }</a>
+				<p class="text-muted small">${cartItem.product.description } <br> Brand: ${cartItem.product.brand }</p>
 			</figcaption>
 		</figure>
 	</td>
@@ -99,7 +99,10 @@
 	</td>
 	<td>
 		<div class="price-wrap">
-			<var class="price">$1156.00</var>
+			<var class="price">
+			
+			
+			var>
 			<small class="text-muted"> $315.20 each </small>
 		</div> <!-- price-wrap .// -->
 	</td>
