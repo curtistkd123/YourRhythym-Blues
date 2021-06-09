@@ -167,7 +167,7 @@ public class HomeController {
 
 	@PostMapping("/newProduct{id}")
 	public String createProduct(@Valid @ModelAttribute("product") Product product, BindingResult result,
-			HttpSession session, @RequestParam("images") MultipartFile multipartFile) throws IOException {
+			HttpSession session) {
 
 		if (result.hasErrors()) {
 			return "newProduct.jsp";
