@@ -87,8 +87,13 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="images1/${c.product.name}.jpg"  class="img-sm"></div>
 			<figcaption class="info">
+<<<<<<< HEAD
 				<a href="#" class="title text-dark"><c:out value="${c.product.name}"/></a>
 				<p class="text-muted small"> ${c.product.description} <br> Brand: ${c.product.brand }</p>
+=======
+				<a href="#" class="title text-dark">${cartItem.product.name }</a>
+				<p class="text-muted small">${cartItem.product.description } <br> Brand: ${cartItem.product.brand }</p>
+>>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
 			</figcaption>
 		</figure>
 	</td>
@@ -102,9 +107,17 @@
 	</td>
 	<td>
 		<div class="price-wrap">
+<<<<<<< HEAD
 		
 			<var class="price">$<c:out value="${c.total}"/></var>
 			<small class="text-muted"> $<c:out value="${c.product.price}"/> each </small>
+=======
+			<var class="price">
+			
+			
+			var>
+			<small class="text-muted"> $315.20 each </small>
+>>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right d-none d-md-block">

@@ -93,6 +93,10 @@ public class PaymentService {
 		Product product = this.pRepo.findById(id).orElse(null);
 		return product;
 	}
+	public void deleteCartItem(Long id) {
+		this.cartRepo.deleteById(id);
+	}
+
 	
 	public void deleteCartItem(Long id) {
 		this.cartRepo.deleteById(id);

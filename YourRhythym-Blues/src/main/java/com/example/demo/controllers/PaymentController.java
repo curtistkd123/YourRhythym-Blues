@@ -151,6 +151,7 @@ public class PaymentController {
 	public String paymentDetail(@ModelAttribute("paymentDetail") PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
 		return "paymentDetail.jsp";
 	}
+<<<<<<< HEAD
 
 	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
 	public String deleteCartItem(@PathVariable("id") Long id,@PathVariable("userid")Long userid) {
@@ -159,6 +160,17 @@ public class PaymentController {
 		cart.remove(pService.findCartItem(id));
 		pService.deleteCartItem(id);
 		
+=======
+	
+	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
+		public String deleteCartItem(@PathVariable("id") Long id) {
+			pService.deleteCartItem(id);
+			return "redirect:/shoppingCart{user_id}";
+		
+	}
+	
+	
+>>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
 	
 		return"redirect:/shoppingCart{userid}";
 
