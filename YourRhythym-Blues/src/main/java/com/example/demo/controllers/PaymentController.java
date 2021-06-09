@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.models.CartItem;
@@ -121,7 +122,15 @@ public class PaymentController {
 	public String paymentDetail(@ModelAttribute("paymentDetail") PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
 		return "paymentDetail.jsp";
 	}
-
+	
+	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
+		public String deleteCartItem(@PathVariable("id") Long id) {
+			pService.deleteCartItem(id);
+			return "redirect:/shoppingCart{user_id}";
+		
+	}
+	
+	
 	
 	
 }
