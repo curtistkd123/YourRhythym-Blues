@@ -139,5 +139,15 @@ public class HomeService {
 			// TODO Auto-generated method stub
 			return pRepo.findById(id).orElse(null);
 		}
+
+		public List<Category> findCategories() {
+			// TODO Auto-generated method stub
+			return (List<Category>) cRepo.findAll();
+		}
+
+		public List<Product> findProductByCategory(Category cat) {
+			// TODO Auto-generated method stub
+			return pRepo.findAllByCategory(cat);
+		}
 	
 }

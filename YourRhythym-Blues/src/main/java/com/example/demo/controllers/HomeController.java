@@ -53,11 +53,12 @@ public class HomeController {
 			List<CartItem> cart = new ArrayList<CartItem>();
 			session.setAttribute("cart", cart);
 		}
-
+		List<Category> categories = service.findCategories();
 		List<Product> products = service.findAllProducts();
 		User user = service.findUserById((Long) session.getAttribute("userid"));
 		model.addAttribute("user", user);
 		model.addAttribute("products", products);
+		model.addAttribute("categories",categories);
 		List<CartItem> cart = user.getCartItems();
 		// List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 		model.addAttribute("cart", cart);
@@ -216,6 +217,29 @@ public class HomeController {
 		Vendor vendor = service.findVendor(id);
 		model.addAttribute("vendor", vendor);
 		return "vdashboard.jsp";
+	}
+	
+	@GetMapping("/categories{id}")
+	public String catList(@PathVariable("id")Long id,HttpSession session, Model model) {
+	if (session.getAttribute("userid") == null) {
+
+		return "redirect:/login";
+	}
+	if (session.getAttribute("cart") == null) {
+		List<CartItem> cart = new ArrayList<CartItem>();
+		session.setAttribute("cart", cart);
+	}
+	Category cat = service.findCategory(id);
+	List<Category> categories = service.findCategories();
+	List<Product> products = service.findProductByCategory(cat);
+	User user = service.findUserById((Long) session.getAttribute("userid"));
+	model.addAttribute("user", user);
+	model.addAttribute("products", products);
+	model.addAttribute("categories",categories);
+	List<CartItem> cart = user.getCartItems();
+	// List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+	model.addAttribute("cart", cart);
+	return "index.jsp";
 	}
 
 }
