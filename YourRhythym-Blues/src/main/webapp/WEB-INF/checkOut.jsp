@@ -34,7 +34,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
@@ -96,7 +96,7 @@
 		  <dt class="col-sm-10">Total:</dt>
 		  <dd class="col-sm-2 text-right"><strong class="h5 text-dark">$ ${Math.round(.05/cartTotal)*100.00  + (Math.round(cartTotal*100.00)/100.00)  }</strong></dd>
 		</dl>
-		<a href="/shippingDetail" class="btn btn-primary btn-block">Purchase!</a>
+		<a href="/orderDetail" class="btn btn-primary btn-block">Purchase!</a>
 				<a href="#" class="btn btn-light btn-block">Continue Shopping</a>
 		
 	</aside> <!-- col. -->

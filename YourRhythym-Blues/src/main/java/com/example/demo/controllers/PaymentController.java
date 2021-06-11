@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.models.CartItem;
+import com.example.demo.models.Category;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
 import com.example.demo.models.OrderItem;
@@ -56,6 +57,38 @@ public class PaymentController {
 	// @GetMapping for product pages
 	// takes path variable "product_id" and "quantity" from product display pages
 
+	@GetMapping("/category{cat_id}")
+	public String showCategory(@PathVariable("cat_id") Long id, @ModelAttribute("product")Product product, HttpSession session, Model model) {
+		if (session.getAttribute("userid") == null) {
+
+			return "redirect:/login";
+		}
+		if (session.getAttribute("cart") == null) {
+			List<CartItem> cart = new ArrayList<CartItem>();
+			session.setAttribute("cart", cart);
+		}
+		List<Category> categories = service.findCategories();
+		List<Product> products = service.findAllProducts();
+		User user = service.findUserById((Long) session.getAttribute("userid"));
+		model.addAttribute("user", user);
+		model.addAttribute("products", products);
+		model.addAttribute("categories",categories);
+		List<CartItem> cart = user.getCartItems();
+		// List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+		model.addAttribute("cart", cart);
+		int quantity = 0;
+		for(CartItem i: cart) {
+			quantity+= i.getQuantity();
+		}
+		model.addAttribute("cartsize", quantity);
+		
+		
+		return "showCategory.jsp";
+	}
+		
+		
+		
+		
 	@GetMapping("/showProduct{id}")
 	public String showProduct(@PathVariable("id") Long id, Model viewModel) {
 		viewModel.addAttribute("product", this.pService.findProduct(id));
@@ -220,25 +253,43 @@ public class PaymentController {
 		return "checkOut.jsp";
 	}
 	
-
-
-//	@PostMapping("/shoppingCart/Checkout/paymentDetail")
-//	public String createOrderDetail(@ModelAttribute("orderDetail") OrderDetail orderDetail, HttpSession session,
-//			Model viewModel) {
-//		Long userId = (Long) session.getAttribute("userid");
-//
-//		User user = this.service.findUserById(userId);
-//		orderDetail.setUser(user);
-//		this.pService.createOrderDetail(orderDetail);
-//		return "redirect:/paymentDetail";
-//	}
-
-	
-	@GetMapping("/shippingDetail")
-	public String shippingDetail(@ModelAttribute("paymentDetail")PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
+	@GetMapping("/orderDetail")
+	public String shippingDetail(@ModelAttribute("order")Order order, HttpSession session, Model viewModel) {
 		Long userId = (Long)session.getAttribute("userid");
-		User user = this.service.findUserById(userId);		
-		return "shippingDetail.jsp";
+		User user = this.service.findUserById(userId);	
+		List<CartItem> cartItems = user.getCartItems();
+		float cartTotal = 0;
+		for (CartItem c : cartItems) {
+			cartTotal += c.getTotal();
+		}
+		int quantity = 0;
+		for(CartItem i: cartItems) {
+			quantity+= i.getQuantity();
+		}
+		viewModel.addAttribute("user", user);
+		viewModel.addAttribute("order", order);
+		viewModel.addAttribute("cartsize", quantity);
+		viewModel.addAttribute("cartTotal", cartTotal);
+		return "orderDetail.jsp";
+	}
+	
+	@PostMapping("/orderDetail")
+	public String newOrder(@Valid @ModelAttribute("order") Order order, BindingResult result, HttpSession session) {
+		Long userId = (Long)session.getAttribute("userid");
+		User user = this.service.findUserById(userId);	
+		if (result.hasErrors()) {
+			return "orderDetail.jsp";
+		}else {
+		
+		order.setUser(user);
+//		List<CartItem> cartItems = user.getCartItems();
+//		order.setCartItems(cartItems);
+//		order.setOrderShippingCost(shippingCost);
+//		order.setOrderTax(orderTax);
+//		order.setOrderAmount(orderAmount);
+		this.pService.createOrder(order);
+		return "redirect:/paymentDetail";
+		}
 	}
 	
 //	@GetMapping("/shippingDetail{orderDetail}")

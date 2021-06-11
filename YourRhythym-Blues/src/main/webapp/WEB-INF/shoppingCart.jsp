@@ -120,7 +120,7 @@
 
 											<var class="price">
 												$
-												<c:out value="${c.total}" />
+												<c:out value="${Math.round(c.total*100.00)/100.00}" />
 											</var>
 											<small class="text-muted"> $<c:out
 													value="${c.product.price}" /> each
@@ -184,7 +184,7 @@
 					<dl class="dlist-align">
 						<dt>Total price:</dt>
 						<dd class="text-right">
-							<c:out value="${cartTotal}" />
+							<c:out value="${Math.round(cartTotal*100.00)/100.00}" />
 						</dd>
 					</dl>
 					<dl class="dlist-align">
@@ -195,7 +195,7 @@
 						<dt>Total:</dt>
 
 						<dd class="text-right text-dark b">
-							<strong>$<c:out value="${cartTotal}" /></strong>
+							<strong>$<c:out value="${Math.round(cartTotal*100.00)/100.00}" /></strong>
 						</dd>
 					</dl>
 					<hr>
