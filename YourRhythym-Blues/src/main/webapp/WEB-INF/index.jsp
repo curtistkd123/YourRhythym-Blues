@@ -54,9 +54,12 @@
 						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
 						role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="#!">All Products</a></li>
+							<li><a class="dropdown-item" href="/">All Products</a></li>
 							<li><hr class="dropdown-divider" /></li>
-							<li><a class="dropdown-item" href="#!">Popular Items</a></li>
+							<c:forEach items="${categories }" var="c">
+							<li><a class="dropdown-item" href="/categories${c.id}"><c:out value="${c.name}"/></a></li>
+							</c:forEach>
+							<li><a class="dropdown-item" href="">Popular Items</a></li>
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
 				</ul>
@@ -64,7 +67,7 @@
 				
 					<button class="btn btn-outline-dark" onclick="/shoppingCart${user.id}" type="submit">
 						<i class="bi-cart-fill me-1"></i> Cart <span
-							class="badge bg-dark text-white ms-1 rounded-pill"><c:out value="${cart.size() }"/></span>
+							class="badge bg-dark text-white ms-1 rounded-pill"><c:out value="${cartsize }"/></span>
 					</button>
 					
 				</form:form>
@@ -86,6 +89,12 @@
 		<div class="container px-4 px-lg-5 mt-5">
 			<div
 				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				<c:choose>
+    <c:when test="${products.size() ==0}">
+        <h3>No items in Category</h3>
+        <br />
+    </c:when>    
+    <c:otherwise>
 				<c:forEach items="${products }" var="p">
 					<div class="col mb-5">
 						<div class="card h-100">
@@ -111,6 +120,8 @@
 						</div>
 					</div>
 				</c:forEach>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</section>
