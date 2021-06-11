@@ -19,8 +19,9 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="css1/styles.css" rel="stylesheet" />
+
 </head>
+
 <body>
 <!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,8 +86,7 @@
 		</div>
 	</header>
 
-<div class="row">
-	<div class="col-md-3 col-sm-6">
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 	<c:choose>
     <c:when test="${products.size() ==0}">
         <h3>No items in Category</h3>
@@ -96,82 +96,20 @@
 				<c:forEach items="${products }" var="p">
 	<div class="col-md-3 col-sm-6">
 		<figure class="card card-product-grid">
-			<a href="/showProduct{p.id}" class="img-wrap">
-				<img src=src="images1/${p.name}.jpg" alt="..."">
-			</a>
-			<figcaption class="info-wrap">
-				<a href="/showProduct{p.id}" class="title"><c:out value="${p.name }" /></a>
-				<div class="mt-2">
-					<var class="price">	$<c:out value="${p.price }"/></var>
-					<ul class="rating-stars float-right">
-						<li style="width:80%" class="stars-active">
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-						</li>
-						<li>
-							<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-						</li>
-					</ul>
-												<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="/addCartItem${p.id}">Add to Cart</a>
-								</div>
-							</div>
-				</div>
+			<div class="img-wrap"> <img src= src="images1/${p.name}.jpg" alt="..." > </div>
+			<figcaption class="info-wrap border-top">
+				<a href="/showProduct{p.id}" class="title">${p.name }</a>
+				<div class="price mt-2">$ ${p.price }</div> <!-- price-wrap.// -->
 			</figcaption>
 		</figure> <!-- card // -->
 	</div> <!-- col.// -->
-				</c:forEach>
-				</c:otherwise>
-				</c:choose>
-	
-	
-	
-		<a href="/showProduct${p.id}" class="card card-product-grid">
-			<div class="img-wrap"> <img src="bootstrap-ecommerce-html/images/items/5.jpg"> </div>
-			<figcaption class="info-wrap">
-				<p class="title text-truncate">Just another long text product name</p>
-				<small class="text-muted">Sizes: S, M, XL</small>
-				<div class="price mt-2">$179.00</div> <!-- price-wrap.// -->
-			</figcaption>
-		</a> <!-- card // -->
+
+			</c:forEach>
+			</c:otherwise>
+		</c:choose>
 	</div> <!-- col.// -->
-	<div class="col-md-3 col-sm-6">
-		<figure class="card card-product-grid">
-			<a href="#" class="img-wrap">
-				<img src="bootstrap-ecommerce-html/images/items/3.jpg">
-			</a>
-			<figcaption class="info-wrap">
-				<a href="#" class="title">Fjällräven Kånken Backpack Blue Ridge</a>
-				<div class="mt-2">
-					<var class="price">$84.00</var> <!-- price-wrap.// -->
-					<a href="#" class="btn btn-sm btn-outline-primary float-right">Add to cart <i class="fa fa-shopping-cart"></i></a>
-				</div> <!-- action-wrap.end -->
-			</figcaption>
-		</figure> <!-- card // -->
-	</div> <!-- col.// -->
-	<div class="col-md-3 col-sm-6">
-		<a href="#" class="card card-product-grid">
-			<div class="img-wrap">
-				<img src="bootstrap-ecommerce-html/images/items/9.jpg">
-			</div>
-			<div class="info-wrap text-center ">
-				<p class="title text-truncate">Bose Headphones 700 best for Gaming</p>
-				<ul class="rating-stars">
-					<li style="width:80%" class="stars-active">
-						<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-					</li>
-					<li>
-						<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-					</li>
-				</ul>
-				<small class="text-muted">34</small>
-				<div class="price-wrap mt-2 text-center">
-					<span class="price">$399.95</span>
-				</div> <!-- price-wrap.// -->
-			</div>
-		</a> <!-- card // -->
-	</div> <!-- col.// -->
-	
-</div> <!-- row.// -->
+</div><!-- row.// -->
+
+
 </body>
 </html>
