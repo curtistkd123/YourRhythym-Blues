@@ -72,13 +72,22 @@ public class User {
 
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<UserPayment> userPayment;
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<OrderItem> orderItems;
 
 //	
 //	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 //	private Vendor vendor;
 	
 
-    @PrePersist
+    public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+	@PrePersist
     protected void onCreate(){
         this.createdAt = new Date();
     }

@@ -29,7 +29,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -87,13 +87,12 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="images1/${c.product.name}.jpg"  class="img-sm"></div>
 			<figcaption class="info">
-<<<<<<< HEAD
+
 				<a href="#" class="title text-dark"><c:out value="${c.product.name}"/></a>
 				<p class="text-muted small"> ${c.product.description} <br> Brand: ${c.product.brand }</p>
-=======
-				<a href="#" class="title text-dark">${cartItem.product.name }</a>
-				<p class="text-muted small">${cartItem.product.description } <br> Brand: ${cartItem.product.brand }</p>
->>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
+
+
+
 			</figcaption>
 		</figure>
 	</td>
@@ -107,17 +106,17 @@
 	</td>
 	<td>
 		<div class="price-wrap">
-<<<<<<< HEAD
+
 		
 			<var class="price">$<c:out value="${c.total}"/></var>
 			<small class="text-muted"> $<c:out value="${c.product.price}"/> each </small>
-=======
+
 			<var class="price">
 			
 			
-			var>
-			<small class="text-muted"> $315.20 each </small>
->>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
+			
+		
+
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right d-none d-md-block">
@@ -165,18 +164,18 @@
 		</dl>
 		<dl class="dlist-align">
 		  <dt>Discount:</dt>
-		  <dd class="text-right text-danger">- $10.00</dd>
+		  <dd class="text-right text-danger">- 0.00</dd>
 		</dl>
 		<dl class="dlist-align">
 		  <dt>Total:</dt>
-		  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+		  <dd class="text-right text-dark b"><strong>${cartTotal}</strong></dd>
 		</dl>
 		<hr>
 		<p class="text-center mb-3">
 			<img src="bootstrap-ecommerce-html/images/misc/payments.png" height="26">
 		</p>
-		<a href="/reviewCart" class="btn btn-primary btn-block"> Make Purchase </a>
-		<a href="#" class="btn btn-light btn-block">Continue Shopping</a>
+		<a href="/reviewCart${orderItem.id }" class="btn btn-primary btn-block"> Make Purchase </a>
+		<a href="/" class="btn btn-light btn-block">Continue Shopping</a>
 </div> <!-- card-body.// -->
 </div> <!-- card.// -->
 

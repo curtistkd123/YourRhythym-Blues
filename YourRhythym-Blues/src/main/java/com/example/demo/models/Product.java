@@ -85,6 +85,27 @@ public class Product {
 		this.updatedAt = new Date();
 	}
 	
+	@OneToOne
+	private CartItem cartItem;
+	
+	@OneToOne
+	private OrderItem orderItem;
+
+	public CartItem getCartItem() {
+		return cartItem;
+	}
+
+	public void setCartItem(CartItem cartItem) {
+		this.cartItem = cartItem;
+	}
+
+	public OrderItem getOrderItem() {
+		return orderItem;
+	}
+
+	public void setOrderItem(OrderItem orderItem) {
+		this.orderItem = orderItem;
+	}
 
 	public ProductInventory getProductInventory() {
 		return productInventory;

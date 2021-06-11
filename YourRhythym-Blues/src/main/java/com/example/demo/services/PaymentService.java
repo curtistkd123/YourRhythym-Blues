@@ -10,11 +10,13 @@ import com.example.demo.models.User;
 import com.example.demo.models.CartItem;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
+import com.example.demo.models.OrderItem;
 import com.example.demo.models.PaymentDetail;
 import com.example.demo.models.Product;
 //import com.example.demo.models.ShoppingSession;
 import com.example.demo.repositories.CartItemRepository;
 import com.example.demo.repositories.OrderDetailRepository;
+import com.example.demo.repositories.OrderItemRepository;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PaymentDetailRepository;
 //import com.example.demo.repositories.ShoppingSessionRepository;
@@ -40,6 +42,9 @@ public class PaymentService {
 	
 	@Autowired
 	private UserRepository uRepo;
+	
+	@Autowired 
+	private OrderItemRepository orderItemRepo;
 	
 	
 //	@Autowired
@@ -73,12 +78,37 @@ public class PaymentService {
 			
 	}
 	
-	public Order createOrderItem(Order order) {
-		return this.orderRepo.save(order);
+	public CartItem updateCart(Long id, Integer quantity) {
+		CartItem updatedCartItem = this.findCartItem(id);
+		updatedCartItem.setQuantity(quantity);
+		return this.cartRepo.save(updatedCartItem);
+	}
+	
+	public OrderItem createOrderItem(OrderItem orderItem) {
+		return this.orderItemRepo.save(orderItem);
+	}
+	
+	public Order findOrderItem(Long id) {
+		Optional<Order> orderItem = orderRepo.findById(id);
+			if(orderItem.isPresent()) {
+				return orderItem.get();
+			}else {
+				return null;
+			}
+		
 	}
 	
 	public OrderDetail createOrderDetail(OrderDetail orderDetail) {
 		return this.orderDetailRepo.save(orderDetail);
+	}
+	
+	public OrderDetail findOrderDetail(Long id) {
+		Optional<OrderDetail> orderDetail = orderDetailRepo.findById(id);
+		if(orderDetail.isPresent()) {
+			return orderDetail.get();
+		}else {
+			return null;
+		}
 	}
 	
 	public PaymentDetail createPaymentDetail(PaymentDetail paymentDetail) {
@@ -92,9 +122,6 @@ public class PaymentService {
 	public Product findProduct(Long id) {
 		Product product = this.pRepo.findById(id).orElse(null);
 		return product;
-	}
-	public void deleteCartItem(Long id) {
-		this.cartRepo.deleteById(id);
 	}
 
 	

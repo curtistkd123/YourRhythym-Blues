@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.models.CartItem;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
+import com.example.demo.models.OrderItem;
 import com.example.demo.models.PaymentDetail;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
@@ -123,22 +124,30 @@ public class PaymentController {
 	
 	
 	
-	@PostMapping("/shoppingCart/checkOut")
-	public String createOrderItem(@ModelAttribute("orderItem") Order order, HttpSession session) {
+	@PostMapping("/reviewCart{product_id}{quantity}")
+	public String createOrderItem(@ModelAttribute("orderItem") OrderItem orderItem, BindingResult results, @PathVariable("product_id") Long pid, @PathVariable("quantity") Integer quantity, HttpSession session) {
 		Long userId = (Long)session.getAttribute("userid");
 		User user = this.service.findUserById(userId);
-		order.setUser(user);
-		this.pService.createOrderItem(order);
-		return "redirect:/checkOut";
+		Long product_id = pid;
+		Product product = this.pService.findProduct(product_id);
+		orderItem.setUser(user);
+		orderItem.setProduct(product);
+		orderItem.setQuantity(quantity);
+		this.pService.createOrderItem(orderItem);
+		return "redirect:/reviewCart{orderItem_id}";
 	}
 	
-	@GetMapping("/reviewCart")
-	public String checkOut(@ModelAttribute("orderItem") Order order) {
-		
+	@GetMapping("/reviewCart{orderItem_id}")
+	public String reviewCart(@PathVariable("orderItem_id") Long oiId, Model viewModel, HttpSession session) {
+		Long userId = (Long)session.getAttribute("userid");
+		User user = pService.findUserById(userId);
+		List<OrderItem> orderItems = user.getOrderItems();
+		viewModel.addAttribute("orderItem", orderItems);
+		viewModel.addAttribute("user", user);		
 		return "checkOut.jsp";
 	}
 	
-	@PostMapping("/shoppingCart/Checkout/paymentDetail")
+	@PostMapping("/shoppingCart/Checkout/shippingDetail")
 	public String createOrderDetail(@ModelAttribute("orderDetail") OrderDetail orderDetail, HttpSession session, Model viewModel) {
 		Long userId = (Long)session.getAttribute("userid");
 		User user = this.service.findUserById(userId);
@@ -147,11 +156,23 @@ public class PaymentController {
 		return "redirect:/paymentDetail";
 	}
 	
-	@GetMapping("/paymentDetail")
-	public String paymentDetail(@ModelAttribute("paymentDetail") PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
-		return "paymentDetail.jsp";
+	@GetMapping("/shippingDetail")
+	public String shippingDetail(@ModelAttribute("paymentDetail")PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
+		Long userId = (Long)session.getAttribute("userid");
+		User user = this.service.findUserById(userId);		
+		return "shippingDetail.jsp";
 	}
-<<<<<<< HEAD
+	
+//	@GetMapping("/shippingDetail{orderDetail}")
+//	public String shippingDetail(@ModelAttribute("paymentDetail")PaymentDetail paymentDetail, @PathVariable("orderDetail") Long odId, HttpSession session, Model viewModel) {
+//		Long userId = (Long)session.getAttribute("userid");
+//		User user = this.service.findUserById(userId);
+//
+//		
+//		
+//		return "shippingDetail.jsp";
+//	}
+//<<<<<<< HEAD
 
 	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
 	public String deleteCartItem(@PathVariable("id") Long id,@PathVariable("userid")Long userid) {
@@ -159,18 +180,18 @@ public class PaymentController {
 		List<CartItem> cart = user.getCartItems();
 		cart.remove(pService.findCartItem(id));
 		pService.deleteCartItem(id);
-		
-=======
+//		
+//=======
 	
-	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
-		public String deleteCartItem(@PathVariable("id") Long id) {
-			pService.deleteCartItem(id);
-			return "redirect:/shoppingCart{user_id}";
-		
-	}
-	
-	
->>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
+//	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
+//		public String deleteCartItem(@PathVariable("id") Long id) {
+//			pService.deleteCartItem(id);
+//			return "redirect:/shoppingCart{user_id}";
+//		
+//	}
+//	
+//	
+//>>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
 	
 		return"redirect:/shoppingCart{userid}";
 
