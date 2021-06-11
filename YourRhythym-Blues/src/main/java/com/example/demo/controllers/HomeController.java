@@ -62,6 +62,11 @@ public class HomeController {
 		List<CartItem> cart = user.getCartItems();
 		// List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
 		model.addAttribute("cart", cart);
+		int quantity = 0;
+		for(CartItem i: cart) {
+			quantity+= i.getQuantity();
+		}
+		model.addAttribute("cartsize", quantity);
 		return "index.jsp";
 	}
 
@@ -241,5 +246,7 @@ public class HomeController {
 	model.addAttribute("cart", cart);
 	return "index.jsp";
 	}
+	
+	
 
 }

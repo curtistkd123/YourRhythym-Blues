@@ -100,5 +100,10 @@ public class PaymentService {
 		this.cartRepo.deleteById(id);
 	}
 
-	
+	public CartItem updateCart(Long id, Integer quantity) {
+		CartItem cartItem = cartRepo.findById(id).orElse(null);
+		cartItem.setQuantity(quantity);
+		return cartRepo.save(cartItem);
+
+	}
 }
