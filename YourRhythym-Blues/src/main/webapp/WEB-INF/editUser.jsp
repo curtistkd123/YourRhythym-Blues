@@ -44,12 +44,80 @@
 	});
 	// jquery end
 </script>
-
+<style >
+ body {
+  background-image: url("images1/background1.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;}
+     .carouselpictures {
+     width:400px;
+     height: 400px;}
+     
+     .product img {
+     width:100%;
+     height: 150px;
+      }
+     }
+      </style>
 </head>
 <body>
 	<!-- Navigation-->
 	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container px-4 px-lg-5">
+			<c:choose>
+				<c:when test="${user.id==null}">
+					<a class="navbar-brand " href="/register"><button>Create
+							Profile</button></a>
+				</c:when>
 
+				<c:otherwise>
+					<c:out value="${user.firstName }" />, <a
+						class="navbar-brand " href="/edituser${user.id}"><button>Edit
+							Profile</button></a>
+
+				</c:otherwise>
+			</c:choose>
+
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="/">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="/">All Products</a></li>
+							<li><hr class="dropdown-divider" /></li>
+							<c:forEach items="${categories }" var="c">
+								<li><a class="dropdown-item" href="/categories${c.id}"><c:out
+											value="${c.name}" /></a></li>
+							</c:forEach>
+							<li><a class="dropdown-item" href="">Popular Items</a></li>
+							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+						</ul></li>
+				</ul>
+				<form:form action="/shoppingCart${user.id}" method="get"
+					class="d-flex">
+
+					<button class="btn btn-outline-dark"
+						onclick="/shoppingCart${user.id}" type="submit">
+						<i class="bi-cart-fill me-1"></i> Cart <span
+							class="badge bg-dark text-white ms-1 rounded-pill"><c:out
+								value="${cartsize }" /></span>
+					</button>
+
+				</form:form>
+			</div>
+		</div>
+	</nav>
 	<header class="bg-dark py-5">
 		<div class="container px-4 px-lg-5 my-5">
 			<div class="text-center text-white">
@@ -74,10 +142,7 @@
 			</p>
 				<form:form action="edituser${user.id}" method="Post"
 					modelAttribute="user">
-					<div class="form-group">
-						<img src="bootstrap-ecommerce-html/images/avatars/avatar1.jpg"
-							class="img-sm rounded-circle border">
-					</div>
+				
 					<div class="form-row">
 						<div class="col form-group">
 							<label>User Name</label>

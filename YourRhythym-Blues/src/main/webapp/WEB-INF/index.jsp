@@ -20,6 +20,21 @@
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css1/styles.css" rel="stylesheet" />
+ <style >
+ body {
+  background-image: url("images1/background1.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;}
+     .carouselpictures {
+     width:400px;
+     height: 400px;}
+     
+     .product img {
+     width:100%;
+     height: 150px;
+      }
+     }
+      </style>
 </head>
 <body>
 	<!-- Navigation-->
@@ -27,13 +42,13 @@
 		<div class="container px-4 px-lg-5">
 			<c:choose>
 				<c:when test="${user.id==null}">
-					<a class="navbar-brand bg-dark" href="/register"><button>Create
+					<a class="navbar-brand " href="/register"><button>Create
 							Profile</button></a>
 				</c:when>
 
 				<c:otherwise>
 					<c:out value="${user.firstName }" />, <a
-						class="navbar-brand bg-dark" href="/edituser${user.id}"><button>Edit
+						class="navbar-brand " href="/edituser${user.id}"><button>Edit
 							Profile</button></a>
 
 				</c:otherwise>
@@ -57,19 +72,23 @@
 							<li><a class="dropdown-item" href="/">All Products</a></li>
 							<li><hr class="dropdown-divider" /></li>
 							<c:forEach items="${categories }" var="c">
-							<li><a class="dropdown-item" href="/categories${c.id}"><c:out value="${c.name}"/></a></li>
+								<li><a class="dropdown-item" href="/categories${c.id}"><c:out
+											value="${c.name}" /></a></li>
 							</c:forEach>
 							<li><a class="dropdown-item" href="">Popular Items</a></li>
 							<li><a class="dropdown-item" href="#!">New Arrivals</a></li>
 						</ul></li>
 				</ul>
-				<form:form action="/shoppingCart${user.id}" method="get" class="d-flex">
-				
-					<button class="btn btn-outline-dark" onclick="/shoppingCart${user.id}" type="submit">
+				<form:form action="/shoppingCart${user.id}" method="get"
+					class="d-flex">
+
+					<button class="btn btn-outline-dark"
+						onclick="/shoppingCart${user.id}" type="submit">
 						<i class="bi-cart-fill me-1"></i> Cart <span
-							class="badge bg-dark text-white ms-1 rounded-pill"><c:out value="${cartsize }"/></span>
+							class="badge bg-dark text-white ms-1 rounded-pill"><c:out
+								value="${cartsize }" /></span>
 					</button>
-					
+
 				</form:form>
 			</div>
 		</div>
@@ -87,40 +106,76 @@
 	<!-- Section-->
 	<section class="py-5">
 		<div class="container px-4 px-lg-5 mt-5">
+			<div class="row justify-content-center">
+				<div id="carousel1_indicator" class="carousel slide"
+					data-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-target="#carousel1_indicator" data-slide-to="0"
+							class="active"></li>
+						<li data-target="#carousel1_indicator" data-slide-to="1"></li>
+						<li data-target="#carousel1_indicator" data-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<a href="/categories${1}"><img class="d-block w-100 carouselpictures" style="width:386" src="images1/guitars.jpg"
+								alt="First slide"></a>
+						</div>
+						<div class="carousel-item">
+							<a href="/categories${4}"><img class="d-block w-100 carouselpictures" src="images1/amplifiers.jpg"
+								alt="Second slide"></a>
+						</div>
+						<div class="carousel-item">
+							<a href="/categories${3}"><img class="d-block w-100 carouselpictures" src="images1/accessories.jpg"
+								alt="Third slide"></a>
+						</div>
+					</div>
+					<a class="carousel-control-prev" href="#carousel1_indicator"
+						role="button" data-slide="prev"> <span
+						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+						class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#carousel1_indicator"
+						role="button" data-slide="next"> <span
+						class="carousel-control-next-icon" aria-hidden="true"></span> <span
+						class="sr-only">Next</span>
+					</a>
+				</div>
+			</div>
 			<div
 				class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 				<c:choose>
-    <c:when test="${products.size() ==0}">
-        <h3>No items in Category</h3>
-        <br />
-    </c:when>    
-    <c:otherwise>
-				<c:forEach items="${products }" var="p">
-					<div class="col mb-5">
-						<div class="card h-100">
-							<!-- Product image-->
-							<img class="card-img-top" src="images1/${p.name}.jpg" alt="..." />
-							<!-- Product details-->
-							<div class="card-body p-4">
-								<div class="text-center">
-									<!-- Product name-->
-									<h5 class="fw-bolder">
-										<c:out value="${p.name }" />
-									</h5>
-									<!-- Product price-->
-								$<c:out value="${p.price }"/>
+					<c:when test="${products.size() ==0}">
+						<h3>No items in Category</h3>
+						<br />
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${products }" var="p">
+							<div class="col mb-5">
+								<div class="card h-100 product">
+									<!-- Product image-->
+									<img class="card-img-top" src="images1/${p.name}.jpg" alt="..." />
+									<!-- Product details-->
+									<div class="card-body p-4">
+										<div class="text-center">
+											<!-- Product name-->
+											<h5 class="fw-bolder">
+												<c:out value="${p.name }" />
+											</h5>
+											<!-- Product price-->
+											$
+											<c:out value="${p.price }" />
+										</div>
+									</div>
+									<!-- Product actions-->
+									<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+										<div class="text-center">
+											<a class="btn btn-outline-dark mt-auto"
+												href="/addCartItem${p.id}">Add to Cart</a>
+										</div>
+									</div>
 								</div>
 							</div>
-							<!-- Product actions-->
-							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="/addCartItem${p.id}">Add to Cart</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-				</c:otherwise>
+						</c:forEach>
+					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>
@@ -137,5 +192,12 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- Core theme JS-->
 	<script src="js1/scripts.js"></script>
+	<script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap -->
+<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
+
+<!-- custom javascript -->
+<script src="js/script.js" type="text/javascript"></script>
 </body>
 </html>
