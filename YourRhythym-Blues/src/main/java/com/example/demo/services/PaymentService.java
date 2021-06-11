@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.User;
+import com.example.demo.models.Category;
 import com.example.demo.models.CartItem;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
@@ -15,6 +16,7 @@ import com.example.demo.models.PaymentDetail;
 import com.example.demo.models.Product;
 //import com.example.demo.models.ShoppingSession;
 import com.example.demo.repositories.CartItemRepository;
+import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.OrderDetailRepository;
 import com.example.demo.repositories.OrderItemRepository;
 import com.example.demo.repositories.OrderRepository;
@@ -46,6 +48,8 @@ public class PaymentService {
 	@Autowired 
 	private OrderItemRepository orderItemRepo;
 	
+	@Autowired
+	private CategoryRepository catRepo;
 	
 //	@Autowired
 //	private ShoppingSessionRepository sessionRepo;  
@@ -60,9 +64,15 @@ public class PaymentService {
 		}
 	}
 	
+	public Category find(Long id) {
+		Category category = this.catRepo.findById(id).orElse(null);
+		return category;
+	}
+	
 	public CartItem createCartItem(CartItem cartItem) {
 		return this.cartRepo.save(cartItem);
 	}
+	
 	
 	public List<CartItem> allCartItems() {
 		return this.cartRepo.findAll();
@@ -84,8 +94,8 @@ public class PaymentService {
 		return this.cartRepo.save(updatedCartItem);
 	}
 	
-	public OrderItem createOrderItem(OrderItem orderItem) {
-		return this.orderItemRepo.save(orderItem);
+	public Order createOrder(Order order) {
+		return this.orderRepo.save(order);
 	}
 	
 	public Order findOrderItem(Long id) {
@@ -95,6 +105,8 @@ public class PaymentService {
 			}else {
 				return null;
 			}
+			
+			
 		
 	}
 	

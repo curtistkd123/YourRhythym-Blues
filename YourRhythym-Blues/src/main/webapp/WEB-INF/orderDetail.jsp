@@ -1,9 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Payment Detail</title>
+<title>Order Detail</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 
@@ -34,7 +39,7 @@
 
 <!--Section: Block Content-->
 <section>
-
+	<form:form method="POST" action="orderDetail" modelAttribute="order">
   <!--Grid row-->
   <div class="row">
 
@@ -45,18 +50,20 @@
       <div class="card wish-list pb-1">
         <div class="card-body">
 
-          <h5 class="mb-2">Shipping details</h5>
+          <h5 class="mb-2">Billing details</h5>
 
           <!-- Grid row -->
           <div class="row">
-
+			
             <!-- Grid column -->
             <div class="col-lg-6">
-
+			
               <!-- First name -->
               <div class="md-form md-outline mb-0 mb-lg-4">
-                <input type="text" id="firstName" class="form-control mb-0 mb-lg-2">
-                <label for="orderShipFirstName">First name</label>
+              	<form:label path="orderFirstName">First name</form:label>
+              	<form:errors path="orderFirstName"/>
+                <form:input type="text" path="orderFirstName" class="form-control mb-0 mb-lg-2"/>
+                
               </div>
 
             </div>
@@ -67,8 +74,10 @@
 
               <!-- Last name -->
               <div class="md-form md-outline">
-                <input type="text" id="lastName" class="form-control">
-                <label for="orderShipLastName">Last name</label>
+                <form:label path="orderLastName">Last name</form:label>
+                <form:errors path="orderLastName"/>
+                <form:input type="text" path="orderLastName" class="form-control"/>
+                
               </div>
 
             </div>
@@ -79,59 +88,72 @@
 
           <!-- Company name -->
           <div class="md-form md-outline my-0">
-            <input type="text" id="orderShipCompanyName" class="form-control mb-0">
-            <label for="orderShipCompanyName">Company name (optional)</label>
+             <form:label path="orderCompanyName">Company name (optional)</form:label>
+             <form:errors path="orderCompanyName"/>
+             <form:input type="text" path="orderCompanyName" class="form-control mb-0"/>
+           
           </div>
 
 
 
           <!-- Address Part 1 -->
           <div class="md-form md-outline mt-0">
-            <input type="text" id="orderShipAddress1" placeholder="House number and street name" class="form-control">
-            <label for="orderShipAddress1">Address</label>
+           <form:label path="orderAddress1">Address line 1</form:label>
+           <form:errors path="orderAddress1"/> 
+           <form:input type="text" path="orderAddress1" placeholder="House number and street name" class="form-control"/>
+            
           </div>
 
           <!-- Address Part 2 -->
           <div class="md-form md-outline">
-            <input type="text" id="orderShipAddress2" placeholder="Apartment, suite, unit etc. (optional)"
-              class="form-control">
-            <label for="orderShipAddress2">Address</label>
+          	 <form:label path="orderAddress2">Address line 2</form:label>
+            <form:input type="text" path="orderAddress2" placeholder="Apartment, suite, unit etc. (optional)"
+              class="form-control"/>
+              <form:errors path="orderAddress2"></form:errors>
+      
           </div>
 
           <!-- Postcode / ZIP -->
           <div class="md-form md-outline">
-            <input type="text" id="orderShipZip" class="form-control">
-            <label for="orderShipZip">ZIP CODE</label>
+            <form:label path="orderZip">ZIP CODE</form:label>
+            <form:input type="text" path="orderZip" class="form-control"/>
+            <form:errors></form:errors>
+            
           </div>
 
           <!-- Town / City -->
           <div class="md-form md-outline">
-            <input type="text" id="orderShipCity" class="form-control">
-            <label for="orderShipCity">City</label>
+             <form:label path="orderCity">City</form:label>
+             <form:input type="text" path="orderCity" class="form-control"/>
+            <form:errors path="orderCity"></form:errors>
           </div>
           
                <!-- State -->
           <div class="md-form md-outline">
-            <input type="text" id="orderShipState" class="form-control">
-            <label for="orderShipState">State</label>
+            <form:label path="orderState">State</form:label>
+            <form:input type="text" path="orderState" class="form-control"/>
+            <form:errors path="orderState"></form:errors>
           </div>
           
           <!-- Country -->
           <div class="md-form md-outline">
-            <input type="text" id="orderShipCountry" class="form-control">
-            <label for="form18">Country</label>
+            <form:label path="orderCountry">Country</form:label>
+            <form:input type="text" path="orderCountry" class="form-control"/>
+            <form:errors path="orderCountry"></form:errors>
           </div>
 
           <!-- Phone -->
           <div class="md-form md-outline">
-            <input type="number" id="orderPhone" class="form-control">
-            <label for="orderPhone">Phone</label>
+            <form:label path="orderPhone">Phone</form:label>
+            <form:input type="number" path="orderPhone" class="form-control"/>
+  			<form:errors  path="orderPhone"/>      
           </div>
 
           <!-- Email address -->
           <div class="md-form md-outline">
-            <input type="email" id="orderEmail" class="form-control">
-            <label for="form20">Email address</label>
+            <form:label path="orderEmail">Email address</form:label>
+            <form:input type="email" path="orderEmail" class="form-control"/>
+            <form:errors path="orderEmail"></form:errors>
           </div>
 
 
@@ -151,11 +173,11 @@
         <div class="card-body">
 
           <h5 class="mb-3">The total amount of</h5>
-
+			
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
              Subtotal
-              <span>insert order total here</span>
+              <span>$ ${Math.round(cartTotal*100.00)/100.00 }</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
               Shipping
@@ -168,10 +190,10 @@
                   <p class="mb-0">(including Tax)</p>
                 </strong>
               </div>
-              <span><strong>insert total times tax</strong></span>
+              <span><strong>$ ${Math.round(.05/cartTotal)*100.00  + (Math.round(cartTotal*100.00)/100.00) + 25 }</strong></span>
             </li>
           </ul>
-
+	
           <button type="button" class="btn btn-primary btn-block waves-effect waves-light">Make purchase</button>
 
         </div>
@@ -184,7 +206,7 @@
 
   </div>
   <!--Grid row-->
-
+</form:form>
 </section>
 <!--Section: Block Content-->
 <!-- ========================= SECTION CONTENT END// ========================= -->
