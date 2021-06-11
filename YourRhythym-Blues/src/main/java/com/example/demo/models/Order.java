@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,10 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="orders")
@@ -41,25 +46,28 @@ public class Order {
 	private float orderAmount;
 	
 	@NotBlank
-	private String orderShipName;
+	private String orderShipFirstName;
 	
 	@NotBlank
-	private String orderShipAddress;
+	private String orderShipLastName;
+	
+
+	private String orderShipCompanyName;
+	
+	@NotBlank
+	private String orderShipAddress1;
 	
 	@NotBlank
 	private String orderShipAddress2;
 	
 	@NotBlank
-	private String orderCity;
+	private String orderShipCity;
 	
 	@NotBlank
-	private String orderState;
+	private Integer orderShipZip;
 	
 	@NotBlank
-	private Integer orderZip;
-	
-	@NotBlank
-	private String orderCountry;
+	private String orderShipCountry;
 	
 	@NotBlank
 	private Integer orderPhone;
@@ -81,6 +89,24 @@ public class Order {
 	
 	@NotNull
 	private Long orderTrackingNumber;
+	
+	@Column(updatable=false)
+	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
+	private Date createdAt;
+	
+	@Column(updatable=false)
+	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
+	private Date updatedAt;
+	
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
+	
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Date();
+	}
 
 	public Order() {
 	}
@@ -125,21 +151,6 @@ public class Order {
 		this.orderAmount = orderAmount;
 	}
 
-	public String getOrderShipName() {
-		return orderShipName;
-	}
-
-	public void setOrderShipName(String orderShipName) {
-		this.orderShipName = orderShipName;
-	}
-
-	public String getOrderShipAddress() {
-		return orderShipAddress;
-	}
-
-	public void setOrderShipAddress(String orderShipAddress) {
-		this.orderShipAddress = orderShipAddress;
-	}
 
 	public String getOrderShipAddress2() {
 		return orderShipAddress2;
@@ -149,37 +160,7 @@ public class Order {
 		this.orderShipAddress2 = orderShipAddress2;
 	}
 
-	public String getOrderCity() {
-		return orderCity;
-	}
 
-	public void setOrderCity(String orderCity) {
-		this.orderCity = orderCity;
-	}
-
-	public String getOrderState() {
-		return orderState;
-	}
-
-	public void setOrderState(String orderState) {
-		this.orderState = orderState;
-	}
-
-	public Integer getOrderZip() {
-		return orderZip;
-	}
-
-	public void setOrderZip(Integer orderZip) {
-		this.orderZip = orderZip;
-	}
-
-	public String getOrderCountry() {
-		return orderCountry;
-	}
-
-	public void setOrderCountry(String orderCountry) {
-		this.orderCountry = orderCountry;
-	}
 
 	public Integer getOrderPhone() {
 		return orderPhone;
@@ -235,6 +216,62 @@ public class Order {
 
 	public void setOrderTrackingNumber(Long orderTrackingNumber) {
 		this.orderTrackingNumber = orderTrackingNumber;
+	}
+
+	public String getOrderShipFirstName() {
+		return orderShipFirstName;
+	}
+
+	public void setOrderShipFirstName(String orderShipFirstName) {
+		this.orderShipFirstName = orderShipFirstName;
+	}
+
+	public String getOrderShipLastName() {
+		return orderShipLastName;
+	}
+
+	public void setOrderShipLastName(String orderShipLastName) {
+		this.orderShipLastName = orderShipLastName;
+	}
+
+	public String getOrderShipCompanyName() {
+		return orderShipCompanyName;
+	}
+
+	public void setOrderShipCompanyName(String orderShipCompanyName) {
+		this.orderShipCompanyName = orderShipCompanyName;
+	}
+
+	public String getOrderShipAddress1() {
+		return orderShipAddress1;
+	}
+
+	public void setOrderShipAddress1(String orderShipAddress1) {
+		this.orderShipAddress1 = orderShipAddress1;
+	}
+
+	public String getOrderShipCity() {
+		return orderShipCity;
+	}
+
+	public void setOrderShipCity(String orderShipCity) {
+		this.orderShipCity = orderShipCity;
+	}
+
+	public Integer getOrderShipZip() {
+		return orderShipZip;
+	}
+
+	public void setOrderShipZip(Integer orderShipZip) {
+		this.orderShipZip = orderShipZip;
+	}
+
+	public String getOrderShipCountry() {
+		return orderShipCountry;
+	}
+
+	public void setOrderShipCountry(String orderShipCountry) {
+		this.orderShipCountry = orderShipCountry;
 	}
 	
 	

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.models.CartItem;
 import com.example.demo.models.Order;
 import com.example.demo.models.OrderDetail;
+import com.example.demo.models.OrderItem;
 import com.example.demo.models.PaymentDetail;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
@@ -198,30 +199,59 @@ public class PaymentController {
 		return "shoppingCart.jsp";
 	}
 
-	@PostMapping("/shoppingCart/checkOut")
-	public String createOrderItem(@ModelAttribute("orderItem") Order order, HttpSession session) {
-		Long userId = (Long) session.getAttribute("userid");
-		User user = this.service.findUserById(userId);
-		order.setUser(user);
-		this.pService.createOrderItem(order);
-		return "redirect:/checkOut";
-	}
-
+	
 	@GetMapping("/reviewCart")
-	public String checkOut(@ModelAttribute("orderItem") Order order) {
-
+	public String reviewCart(Model viewModel, HttpSession session) {
+		Long userId = (Long)session.getAttribute("userid");
+		User user = pService.findUserById(userId);
+		List<CartItem> cartItems = user.getCartItems();
+		viewModel.addAttribute("cartItems", cartItems);
+		viewModel.addAttribute("user", user);	
+		float cartTotal = 0;
+		for (CartItem c : cartItems) {
+			cartTotal += c.getTotal();
+		}
+		int quantity = 0;
+		for(CartItem i: cartItems) {
+			quantity+= i.getQuantity();
+		}
+		viewModel.addAttribute("cartsize", quantity);
+		viewModel.addAttribute("cartTotal", cartTotal);
 		return "checkOut.jsp";
 	}
+	
 
-	@PostMapping("/shoppingCart/Checkout/paymentDetail")
-	public String createOrderDetail(@ModelAttribute("orderDetail") OrderDetail orderDetail, HttpSession session,
-			Model viewModel) {
-		Long userId = (Long) session.getAttribute("userid");
-		User user = this.service.findUserById(userId);
-		orderDetail.setUser(user);
-		this.pService.createOrderDetail(orderDetail);
-		return "redirect:/paymentDetail";
+
+//	@PostMapping("/shoppingCart/Checkout/paymentDetail")
+//	public String createOrderDetail(@ModelAttribute("orderDetail") OrderDetail orderDetail, HttpSession session,
+//			Model viewModel) {
+//		Long userId = (Long) session.getAttribute("userid");
+//
+//		User user = this.service.findUserById(userId);
+//		orderDetail.setUser(user);
+//		this.pService.createOrderDetail(orderDetail);
+//		return "redirect:/paymentDetail";
+//	}
+
+	
+	@GetMapping("/shippingDetail")
+	public String shippingDetail(@ModelAttribute("paymentDetail")PaymentDetail paymentDetail, HttpSession session, Model viewModel) {
+		Long userId = (Long)session.getAttribute("userid");
+		User user = this.service.findUserById(userId);		
+		return "shippingDetail.jsp";
 	}
+	
+//	@GetMapping("/shippingDetail{orderDetail}")
+//	public String shippingDetail(@ModelAttribute("paymentDetail")PaymentDetail paymentDetail, @PathVariable("orderDetail") Long odId, HttpSession session, Model viewModel) {
+//		Long userId = (Long)session.getAttribute("userid");
+//		User user = this.service.findUserById(userId);
+//
+//		
+//		
+//		return "shippingDetail.jsp";
+//	}
+//<<<<<<< HEAD
+
 
 	@GetMapping("/paymentDetail")
 	public String paymentDetail(@ModelAttribute("paymentDetail") PaymentDetail paymentDetail, HttpSession session,
@@ -229,12 +259,29 @@ public class PaymentController {
 		return "paymentDetail.jsp";
 	}
 
+
 	@RequestMapping(value = "/shoppingCart{userid}/delete{id}")
 	public String deleteCartItem(@PathVariable("id") Long id, @PathVariable("userid") Long userid) {
 		User user = service.findUserById(userid);
 		List<CartItem> cart = user.getCartItems();
 		cart.remove(pService.findCartItem(id));
 		pService.deleteCartItem(id);
+
+//		
+//=======
+	
+//	@RequestMapping(value="/shoppingCart{userid}/delete{id}")
+//		public String deleteCartItem(@PathVariable("id") Long id) {
+//			pService.deleteCartItem(id);
+//			return "redirect:/shoppingCart{user_id}";
+//		
+//	}
+//	
+//	
+//>>>>>>> 32ffe894cdbf596c5e4b9a3d1a38e62536677d8d
+	
+		return"redirect:/shoppingCart{userid}";
+
 
 		/*
 		 * @RequestMapping(value="/shoppingCart{userid}/delete{id}") public String
@@ -244,7 +291,6 @@ public class PaymentController {
 		 * }
 		 */
 
-		return "redirect:/shoppingCart{userid}";
 
 	}
 }

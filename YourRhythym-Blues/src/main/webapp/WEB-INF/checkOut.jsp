@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,73 +67,40 @@
         </header>
 <h1>Review Cart</h1>
 <div class="row">
+
 	<aside class="col-lg-9">
+		<c:forEach items="${cartItems}" var="c">
 				<div class="col-md-6">
 					<figure class="itemside  mb-3">
 						<div class="aside"><img src="bootstrap-ecommerce-html/images/items/1.jpg" class="border img-xs"></div>
 						<figcaption class="info">
-							<p>Name of the product goes here or title </p>
-							<span>2x $290 = Total: $430 </span>
-						</figcaption>
-					</figure>
-				</div> <!-- col.// -->
-				<div class="col-md-6">
-					<figure class="itemside  mb-3">
-						<div class="aside"><img src="bootstrap-ecommerce-html/images/items/2.jpg" class="border img-xs"></div>
-						<figcaption class="info">
-							<p>Name of the product goes here or title </p>
-							<span>2x $290 = Total: $430 </span>
-						</figcaption>
-					</figure>
-				</div> <!-- col.// -->
-				<div class="col-md-6">
-					<figure class="itemside mb-3">
-						<div class="aside"><img src="bootstrap-ecommerce-html/images/items/3.jpg" class="border img-xs"></div>
-						<figcaption class="info">
-							<p>Name of the product goes here or title </p>
-							<span>1x $290 = Total: $290 </span>
-						</figcaption>
-					</figure>
-				</div> <!-- col.// -->
-				<div class="col-md-6">
-					<figure class="itemside  mb-3">
-						<div class="aside"><img src="bootstrap-ecommerce-html/images/items/4.jpg" class="border img-xs"></div>
-						<figcaption class="info">
-							<p>Name of the product goes here or title </p>
-							<span>4x $290 = Total: $430 </span>
+							<p>${c.product.name } </p>
+							<span>${c.quantity} x  $ ${c.product.price} = $ ${Math.round(c.total*100.00)/100.00} </span>
 						</figcaption>
 					</figure>
 				</div> <!-- col.// -->
 
-
-
-
+			</c:forEach>
 
 		<dl class="row">
-		  <dt class="col-sm-10">Subtotal: <span class="float-right text-muted">2 items</span></dt>
-		  <dd class="col-sm-2 text-right"><strong>$1,568</strong></dd>
-
-		  <dt class="col-sm-10">Discount: <span class="float-right text-muted">10% offer</span></dt>
-		  <dd class="col-sm-2 text-danger text-right"><strong>$29</strong></dd>
+		
+		  <dt class="col-sm-10">Subtotal: <span class="float-right text-muted">${cartsize }</span></dt>
+		  <dd class="col-sm-2 text-right"><strong>$ ${Math.round(cartTotal*100.00)/100.00 }</strong></dd>
 
 		  <dt class="col-sm-10">Delivery charge: <span class="float-right text-muted">Express delivery</span></dt>
-		  <dd class="col-sm-2 text-right"><strong>$120</strong></dd>
+		  <dd class="col-sm-2 text-right"><strong>$25.00</strong></dd>
 
 		  <dt class="col-sm-10">Tax: <span class="float-right text-muted">5%</span></dt>
-		  <dd class="col-sm-2 text-right text-success"><strong>$7</strong></dd>
+		  <dd class="col-sm-2 text-right text-success"><strong>$ ${Math.round(.05*cartTotal)}</strong></dd>
 
 		  <dt class="col-sm-10">Total:</dt>
-		  <dd class="col-sm-2 text-right"><strong class="h5 text-dark">$1,650</strong></dd>
+		  <dd class="col-sm-2 text-right"><strong class="h5 text-dark">$ ${Math.round(.05/cartTotal)*100.00  + (Math.round(cartTotal*100.00)/100.00)  }</strong></dd>
 		</dl>
-		<a href="/paymentDetail" class="btn btn-primary btn-block">Purchase!</a>
+		<a href="/shippingDetail" class="btn btn-primary btn-block">Purchase!</a>
 				<a href="#" class="btn btn-light btn-block">Continue Shopping</a>
-
-	
-
-
-
-
+		
 	</aside> <!-- col. -->
+
 </div><!-- row.// -->
 <!-- ========================= SECTION CONTENT END// ========================= -->
 
