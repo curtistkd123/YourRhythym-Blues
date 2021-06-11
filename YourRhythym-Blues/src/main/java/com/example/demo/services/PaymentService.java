@@ -123,20 +123,12 @@ public class PaymentService {
 		Product product = this.pRepo.findById(id).orElse(null);
 		return product;
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> fc5e41263ff591df87244d073f194f08630b69e8
+
 
 	
 	public void deleteCartItem(Long id) {
 		this.cartRepo.deleteById(id);
 	}
 
-	public CartItem updateCart(Long id, Integer quantity) {
-		CartItem cartItem = cartRepo.findById(id).orElse(null);
-		cartItem.setQuantity(quantity);
-		return cartRepo.save(cartItem);
 
-	}
 }
