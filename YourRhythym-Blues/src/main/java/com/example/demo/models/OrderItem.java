@@ -48,6 +48,14 @@ public class OrderItem {
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
 	private Date updatedAt;
 	
+	
+	public OrderItem(User user, Product product, @NotNull Integer quantity) {
+		super();
+		this.user = user;
+		this.product = product;
+		this.quantity = quantity;
+	}
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
@@ -60,6 +68,8 @@ public class OrderItem {
 
 	public OrderItem() {
 	}
+
+	
 
 	public Long getId() {
 		return id;

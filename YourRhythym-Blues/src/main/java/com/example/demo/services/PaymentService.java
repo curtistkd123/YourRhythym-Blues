@@ -94,9 +94,9 @@ public class PaymentService {
 		return this.cartRepo.save(updatedCartItem);
 	}
 	
-	public Order createOrder(Order order) {
-		return this.orderRepo.save(order);
-	}
+	/*public Order createOrder(Order order) {
+		return orderRepo.save(order);
+	}*/
 	
 	public Order findOrderItem(Long id) {
 		Optional<Order> orderItem = orderRepo.findById(id);

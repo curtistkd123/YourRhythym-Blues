@@ -9,10 +9,12 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.models.CartItem;
 import com.example.demo.models.Category;
 import com.example.demo.models.Product;
 import com.example.demo.models.User;
 import com.example.demo.models.Vendor;
+import com.example.demo.repositories.CartItemRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.repositories.UserRepository;
@@ -30,6 +32,9 @@ public class HomeService {
 	private CategoryRepository cRepo;
 	@Autowired
 	private ProductRepository pRepo;
+	
+	@Autowired
+	private CartItemRepository cartRepo;
 
 	public @Valid Vendor createVendor(@Valid Vendor vendor) {
 		// TODO Auto-generated method stub
@@ -148,6 +153,14 @@ public class HomeService {
 		public List<Product> findProductByCategory(Category cat) {
 			// TODO Auto-generated method stub
 			return pRepo.findAllByCategory(cat);
+		}
+
+		public void deleteCart(User user) {
+			// TODO Auto-generated method stub
+			List<CartItem> cart = user.getCartItems();
+			for(CartItem c: cart) {
+				cartRepo.delete(c);
+			}
 		}
 	
 }

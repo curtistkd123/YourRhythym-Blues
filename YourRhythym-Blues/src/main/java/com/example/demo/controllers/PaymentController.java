@@ -280,14 +280,28 @@ public class PaymentController {
 		if (result.hasErrors()) {
 			return "orderDetail.jsp";
 		}else {
-		
+			
 		order.setUser(user);
+		
 //		List<CartItem> cartItems = user.getCartItems();
 //		order.setCartItems(cartItems);
 //		order.setOrderShippingCost(shippingCost);
 //		order.setOrderTax(orderTax);
 //		order.setOrderAmount(orderAmount);
-		this.pService.createOrder(order);
+		List<CartItem> cart = user.getCartItems();
+		List<OrderItem> orderitems = user.getOrderItems();
+		List<OrderDetail> details = new ArrayList<OrderDetail>();
+		for(CartItem c: cart) {
+			OrderItem item = new OrderItem(user, c.getProduct(),c.getQuantity());
+			orderitems.add(item);
+			OrderDetail detail = new OrderDetail(user,item,c.getProduct(),c.getProduct().getName(),c.getProduct().getPrice(), c.getQuantity());
+			details.add(detail);
+		}
+		order.setOrderDetails(details);
+		
+		user.setOrderItems(orderitems);
+		service.updateUser(user.getId(), user);
+	
 		return "redirect:/paymentDetail";
 		}
 	}
@@ -343,5 +357,23 @@ public class PaymentController {
 		 */
 
 
+	}
+	
+	@PostMapping("/payment")
+		public String createOrder(HttpSession session) {
+		Long id = (Long) session.getAttribute("userid");
+		User user = service.findUserById(id);
+		List<CartItem> cart = user.getCartItems();
+		List<OrderItem> orderitems = user.getOrderItems();
+		
+		for(CartItem c: cart) {
+			OrderItem item = new OrderItem(user, c.getProduct(),c.getQuantity());
+			orderitems.add(item);
+		}
+		
+		user.setOrderItems(orderitems);
+		service.updateUser(user.getId(), user);
+		
+		return"/orderDetail";
 	}
 }

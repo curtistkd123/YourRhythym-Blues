@@ -39,6 +39,8 @@
 
 <!--Section: Block Content-->
 <section>
+	<p>	<form:errors path="order.*" />
+			</p>
 	<form:form method="POST" action="orderDetail" modelAttribute="order">
   <!--Grid row-->
   <div class="row">
@@ -194,7 +196,7 @@
             </li>
           </ul>
 	
-          <button type="button" class="btn btn-primary btn-block waves-effect waves-light">Make purchase</button>
+          <input type = "submit" value = "Make Purchase" class="btn-success btn-block btn" />
 
         </div>
       </div>

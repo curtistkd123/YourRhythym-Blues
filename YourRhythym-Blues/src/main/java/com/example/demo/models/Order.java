@@ -16,7 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -68,7 +70,7 @@ public class Order {
 	@NotBlank
 	private String orderAddress1;
 	
-	@NotBlank
+
 	private String orderAddress2;
 	
 	@NotBlank
@@ -78,13 +80,13 @@ public class Order {
 	private String orderState;
 	
 	@NotBlank
-	private Integer orderZip;
+	private String orderZip;
 	
 	@NotBlank
 	private String orderCountry;
 	
 	@NotBlank
-	private Integer orderPhone;
+	private String orderPhone;
 	
 	@NotNull
 	private float orderShippingCost;
@@ -121,6 +123,11 @@ public class Order {
 	}
 
 	public Order() {
+	}
+
+	public Order(User user2) {
+		// TODO Auto-generated constructor stub
+		this.user = user2;
 	}
 
 	public Long getId() {
@@ -179,13 +186,7 @@ public class Order {
 		this.orderCity = orderCity;
 	}
 
-	public Integer getOrderZip() {
-		return orderZip;
-	}
-
-	public void setOrderZip(Integer orderZip) {
-		this.orderZip = orderZip;
-	}
+	
 
 	public String getOrderCountry() {
 		return orderCountry;
@@ -236,11 +237,21 @@ public class Order {
 		this.orderAmount = orderAmount;
 	}
 
-	public Integer getOrderPhone() {
+
+
+	public String getOrderZip() {
+		return orderZip;
+	}
+
+	public void setOrderZip(String orderZip) {
+		this.orderZip = orderZip;
+	}
+
+	public String getOrderPhone() {
 		return orderPhone;
 	}
 
-	public void setOrderPhone(Integer orderPhone) {
+	public void setOrderPhone(String orderPhone) {
 		this.orderPhone = orderPhone;
 	}
 

@@ -68,6 +68,20 @@ public class OrderDetail {
 	private PaymentDetail paymentDetail;
 
 	
+	
+	public OrderDetail(User user, OrderItem orderItems,  Product product, @NotBlank String detailName,
+			@NotNull float detailPrice, @NotNull Integer detailQuantity) {
+		super();
+		this.user = user;
+		this.orderItems = orderItems;
+		
+		this.product = product;
+		this.detailName = detailName;
+		this.detailPrice = detailPrice;
+		this.detailQuantity = detailQuantity;
+		this.paymentDetail = paymentDetail;
+	}
+
 	@Column(updatable=false)
 	@DateTimeFormat(pattern = "yyyy-MM--DD HH:mm:ss")
 	private Date createdAt;
